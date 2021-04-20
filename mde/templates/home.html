@@ -13,28 +13,40 @@
     </head>
     <body>
         
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
+            <!-- <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #42eff5; opacity:0.4;"> -->
+            <nav class="navbar navbar-expand-lg" style="background-color: #94dde6;">
+                
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar</a>
+              <a class="navbar-brand" href="#">
+                <label type="text" style="color:red"> Math</label>  
+                <label type="text" style="color:green"> Daily</label>  
+                <label type="text" style="color:purple"> Exercises</label>  
+                <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>  
+                  
+              </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" style="color:#0a6da6" href="{{ url_for('home_page') }}">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <!-- <a class="nav-link" style="color: #000;"; href="#">Play</a> -->
+                    <a class="nav-link" style="color:#0a6da6" href="#">Play</a>
                   </li>
-                  
+                  <li class="nav-item">
+                    <a class="nav-link" style="color:#0a6da6" href="#">My Stats</a>
+                  </li>
                 </ul>
                 <ul class="navbar-nav mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Register</a>
+                        <a class="nav-link" style="color:white" aria-current="page"  href="#">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Login</a>
+                        <a class="nav-link" style="color:white" aria-current="page" href="#">Login</a>
                     </li>
                 </ul>
               </div>
@@ -46,11 +58,6 @@
             
             Home Page
         </h1>
-
-    
-
-
-
 
 
         <!-- bootstrap code jQuery first, then Popper.js, then Bootstrap JS -->
