@@ -19,7 +19,7 @@ class User(db.Model):
     @property
     def password(self):
         return self.password
-        
+
     
     # this method will be called by @property
     @password.setter

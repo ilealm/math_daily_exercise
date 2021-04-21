@@ -36,12 +36,13 @@ def register_page():
         return redirect(url_for('home_page'))
         
         
-        # TODO: hash password
+        # TODO: hash password: done
         # TODO: log the new user to the session
         # TODO: have parent psw optional
         # TODO: clear form
         # TODO: add login_required to routes
         # TODO: fix closing error window
+        # TODO: align register form components
 
     # Display errors using flashing
     if form.errors != {}:
