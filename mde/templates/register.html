@@ -21,28 +21,52 @@
 
         </div>
 
-        <div class=" m-md-3">
-            <form method='POST' class="form-register" >       
+        <div class=" m-md-3 ">
+            <form method='POST' class="form-register " >       
                 <!-- the next line is to secure the page from CSTF attacks -->
                 {{ form.hidden_tag() }}
-                <!-- pb-3 means: padding bottom of 3.  pt-3 means: padding top of 3. w-75 means: wide of 75%  -->
                 
-                {{ form.username.label() }} 
-                {{ form.username(class="form-control w-75 ", placeholder='Username') }}      
-                
-                {{ form.email_address.label(class=" pt-3") }}    
-                {{ form.email_address(class="form-control w-75", placeholder='Email Address') }}      
-                
-                {{ form.password1.label(class=" pt-3") }}
-                {{ form.password1(class="form-control w-75", placeholder='Password') }}     
-                
-                {{ form.password2.label(class=" pt-3") }}
-                {{ form.password2(class="form-control w-75", placeholder='Confirm Password') }}  
-                
-                <label> If you want to send your results to a parent, please add its email address </label>
-                {{ form.parent_email_address.label(class=" pt-3") }}    
-                {{ form.parent_email_address(class="form-control w-75", placeholder='Parent Email Address') }} 
-                <br>                
+                <div class="row mb-3">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label"> 
+                        {{ form.username.label() }}  </label>
+                    <div class="col-sm-10">
+                        {{ form.username(class="form-control w-75 ", placeholder='Username') }}      
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label"> 
+                        {{ form.email_address.label() }}  </label>
+                    <div class="col-sm-10">
+                        {{ form.email_address(class="form-control w-75", placeholder='Email Address') }}        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label"> 
+                        {{ form.password1.label() }}  </label>
+                    <div class="col-sm-10">
+                        {{ form.password1(class="form-control w-75", placeholder='Password') }}     
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label"> 
+                        {{ form.password2.label() }}  </label>
+                    <div class="col-sm-10">
+                        {{ form.password2(class="form-control w-75", placeholder='Confirm Password') }}  
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label> If you want to send your results to a parent, please add its email address </label>
+                    <label for="colFormLabel" class="col-sm-2 col-form-label"> 
+                        {{ form.parent_email_address.label() }}  </label>
+                    <div class="col-sm-10">
+                        {{ form.parent_email_address(class="form-control w-75", placeholder='Parent Email Address') }} 
+                    </div>
+                </div>
+
                 
                 {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
 
