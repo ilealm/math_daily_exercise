@@ -1,8 +1,8 @@
 from flask import render_template
 
-
-
 from mde import app
+from mde.models import User
+
 
 @app.route('/')
 @app.route('/home')
