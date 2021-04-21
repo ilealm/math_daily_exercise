@@ -8,6 +8,9 @@ pip install flask-sqlalchemy
 To hash passwords:
 pip install flask_bcrypt
 
+To log user in session
+pip install flask_login
+
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mde.db'
 
@@ -16,3 +19,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mde.db'
 python run.py
 
 #
+
+
+
+
+# TODO List

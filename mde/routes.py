@@ -45,7 +45,7 @@ def register_page():
         # LOGIN branch
         # TODO: hash password: done
         # TODO: log the new user to the session: done
-        # TODO: have parent psw optional
+        # TODO: have parent psw optional: done
         # TODO: align register form components
         # TODO: fix closing error window
         # TODO: show username when logged

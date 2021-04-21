@@ -5,42 +5,46 @@
 {% endblock %}
 
 {% block content %}
-    <body class="text-center">
-        
-        <div class="container">
-            <form method='POST' class="form-register" >       
-                <!-- the next line is to secure the page from CSTF attacks -->
-                {{ form.hidden_tag() }}
-                <br> 
-                <h1 class="h3 mb-3 font-weight-normal">
-                    Please Create your Account
-                </h1>
-                <br>
-                
-                {{ form.username.label() }}
-                {{ form.username(class="form-control", placeholder='Username') }}      
-                
-                {{ form.email_address.label() }}    
-                {{ form.email_address(class="form-control", placeholder='Email Address') }}      
-                
-                {{ form.password1.label() }}
-                {{ form.password1(class="form-control", placeholder='Password') }}     
-                
-                {{ form.password2.label() }}
-                {{ form.password2(class="form-control", placeholder='Confirm Password') }}  
-                
-                <label> If you want to send your results to a parent, please add its email address </label>
-                {{ form.parent_email_address.label() }}    
-                {{ form.parent_email_address(class="form-control", placeholder='Parent Email Address') }} 
-                <br>
-                
-                <div class="checkbox mb-3">
-                    <h6>Already have an account?</h6>
-                    <a class="btn btn-sm btn-secondary" href="{{ url_for('login_page') }}">Login</a>
-                 </div>
+    <div class="container">
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light text-center ">
+            <h1>
+                <label type="text" style="color:red"> Math</label>  
+                <label type="text" style="color:green"> Daily</label>  
+                <label type="text" style="color:purple"> Exercises</label>  
+                <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
+            </h1>
+            <br>             
+            <p class="h5"> Please fill the information for your new Account </p>   
+            <p class="h6"> Already have an account? </p>   
+            <a class="btn btn-outline-danger me-2" href="{{ url_for('login_page') }}">Login</a>
 
-                {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
-            </form>
         </div>
-    </body>
+
+        <form method='POST' class="form-register" >       
+            <!-- the next line is to secure the page from CSTF attacks -->
+            {{ form.hidden_tag() }}
+            
+            {{ form.username.label() }}
+            {{ form.username(class="form-control", placeholder='Username') }}      
+            
+            {{ form.email_address.label() }}    
+            {{ form.email_address(class="form-control", placeholder='Email Address') }}      
+            
+            {{ form.password1.label() }}
+            {{ form.password1(class="form-control", placeholder='Password') }}     
+            
+            {{ form.password2.label() }}
+            {{ form.password2(class="form-control", placeholder='Confirm Password') }}  
+            
+            <label> If you want to send your results to a parent, please add its email address </label>
+            {{ form.parent_email_address.label() }}    
+            {{ form.parent_email_address(class="form-control", placeholder='Parent Email Address') }} 
+            <br>
+            
+            
+                {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+
+        </form>
+    </div>
+
 {% endblock %}
