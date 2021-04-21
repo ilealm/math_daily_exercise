@@ -59,17 +59,20 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label> If you want to send your results to a parent, please add its email address </label>
+
                     <label for="colFormLabel" class="col-sm-2 col-form-label"> 
                         {{ form.parent_email_address.label() }}  </label>
                     <div class="col-sm-10">
                         {{ form.parent_email_address(class="form-control w-75", placeholder='Parent Email Address') }} 
+                        <label class="col-sm- col-form-label col-form-label-sm"> 
+                            If you want to send your results to a parent, please add its email address
+                        </label>
                     </div>
                 </div>
 
-                
-                {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
-
+                <div class="text-center">
+                    {{ form.submit(class="btn btn-outline-success me-2 ") }}
+                </div>
             </form>
         </div>
     </div>
