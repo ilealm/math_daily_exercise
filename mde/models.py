@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(length=30), nullable=False, unique=True)
     email_address = db.Column(db.String(length=50), nullable=False, unique=True)
     password_hash = db.Column(db.String(length=60), nullable=False)
-    parent_email_address = db.Column(db.String(length=50), nullable=True)
+    parent_email_address = db.Column(db.String(length=50), nullable=True, default=None)
     games_played = db.Column(db.Integer(), nullable=True, default=0)
     last_played = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
 

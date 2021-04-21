@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional
 
 from mde.models import User
 
@@ -26,6 +26,6 @@ class RegisterForm(FlaskForm):
     password1 = PasswordField(label='Password', validators=[Length(min=6), DataRequired()])
     # I don't need to add the validator to psw2 bc it must be = to psw1
     password2 = PasswordField(label='Confirm Password', validators=[EqualTo('password1', message='Passwords must match'), DataRequired()])
-    parent_email_address = StringField(label='Parent Email Address:', validators=[ Email() ])
+    parent_email_address = StringField(label='Parent Email Address:', validators=[ Email(), Optional() ])
     
     submit = SubmitField(label='Create Account')

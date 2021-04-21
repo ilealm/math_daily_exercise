@@ -25,7 +25,7 @@ def login_page():
 def register_page():
     form = RegisterForm()
 
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         user_to_create = User(
                             username = form.username.data,
                             email_address = form.email_address.data,
@@ -42,15 +42,20 @@ def register_page():
         flash( f"Account created successfully! You are now logged in as {user_to_create.username}", category='success')
         return redirect(url_for('home_page'))
         
-        
+        # LOGIN branch
         # TODO: hash password: done
         # TODO: log the new user to the session: done
-        # TODO: add decorated login_required to routes
         # TODO: have parent psw optional
+        # TODO: align register form components
+        # TODO: fix closing error window
+        # TODO: show username when logged
+        # TODO: add more friendy error msg on forms
+        # TODO: refactor login
+        # TODO: change login ctrol to logut
+        # TODO: add logout
+        # TODO: add decorated login_required to routes
         # TODO: clear form
         # TODO: add login_required to routes
-        # TODO: fix closing error window
-        # TODO: align register form components
 
     # Display errors using flashing
     if form.errors != {}:
