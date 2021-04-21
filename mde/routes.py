@@ -51,6 +51,7 @@ def register_page():
         # TODO: show username when logged
         # TODO: add more friendy error msg on forms
         # TODO: refactor login
+        # TODO: add custom bootstraps
         # TODO: change login ctrol to logut
         # TODO: add logout
         # TODO: add decorated login_required to routes

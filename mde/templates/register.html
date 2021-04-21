@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container ">       
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light text-center ">
             <h1>
                 <label type="text" style="color:red"> Math</label>  
@@ -15,36 +15,39 @@
             </h1>
             <br>             
             <p class="h5"> Please fill the information for your new Account </p>   
-            <p class="h6"> Already have an account? </p>   
+            <small class="text-muted"> Already have an account? </small> 
+            <br>
             <a class="btn btn-outline-danger me-2" href="{{ url_for('login_page') }}">Login</a>
 
         </div>
 
-        <form method='POST' class="form-register" >       
-            <!-- the next line is to secure the page from CSTF attacks -->
-            {{ form.hidden_tag() }}
-            
-            {{ form.username.label() }}
-            {{ form.username(class="form-control", placeholder='Username') }}      
-            
-            {{ form.email_address.label() }}    
-            {{ form.email_address(class="form-control", placeholder='Email Address') }}      
-            
-            {{ form.password1.label() }}
-            {{ form.password1(class="form-control", placeholder='Password') }}     
-            
-            {{ form.password2.label() }}
-            {{ form.password2(class="form-control", placeholder='Confirm Password') }}  
-            
-            <label> If you want to send your results to a parent, please add its email address </label>
-            {{ form.parent_email_address.label() }}    
-            {{ form.parent_email_address(class="form-control", placeholder='Parent Email Address') }} 
-            <br>
-            
-            
+        <div class=" m-md-3">
+            <form method='POST' class="form-register" >       
+                <!-- the next line is to secure the page from CSTF attacks -->
+                {{ form.hidden_tag() }}
+                <!-- pb-3 means: padding bottom of 3.  pt-3 means: padding top of 3. w-75 means: wide of 75%  -->
+                
+                {{ form.username.label() }} 
+                {{ form.username(class="form-control w-75 ", placeholder='Username') }}      
+                
+                {{ form.email_address.label(class=" pt-3") }}    
+                {{ form.email_address(class="form-control w-75", placeholder='Email Address') }}      
+                
+                {{ form.password1.label(class=" pt-3") }}
+                {{ form.password1(class="form-control w-75", placeholder='Password') }}     
+                
+                {{ form.password2.label(class=" pt-3") }}
+                {{ form.password2(class="form-control w-75", placeholder='Confirm Password') }}  
+                
+                <label> If you want to send your results to a parent, please add its email address </label>
+                {{ form.parent_email_address.label(class=" pt-3") }}    
+                {{ form.parent_email_address(class="form-control w-75", placeholder='Parent Email Address') }} 
+                <br>                
+                
                 {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
 
-        </form>
+            </form>
+        </div>
     </div>
 
 {% endblock %}
