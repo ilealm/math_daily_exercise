@@ -18,6 +18,8 @@ class RegisterForm(FlaskForm):
         if email_address:
             raise ValidationError('Email Address already exists! Please try a different email address')
 
+
+
     # to be able to use validators, I need to import wtforms. If I want to add more than 1 validator, then add []
     username = StringField(label='User Name', validators=[Length(min=2, max=30), DataRequired()])
     email_address = StringField(label='Email Address:', validators=[Email(), DataRequired()])

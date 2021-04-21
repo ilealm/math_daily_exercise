@@ -1,4 +1,4 @@
-from flask import render_template #, flash
+from flask import render_template, flash, redirect, url_for
 
 from mde import app, db
 from mde.models import User
@@ -28,20 +28,27 @@ def register_page():
                             username = form.username.data,
                             email_address = form.username.data,
                             password_hash = form.username.data,
-                            parent_email_address = form.username.data     )
+                            parent_email_address = form.parent_email_address.data     )
         db.session.add(user_to_create)
         db.session.commit()
-        print('user added')
+        # print('user added')
+        flash( f"Account created successfully! You are now logged in as {user_to_create.username}", category='success')
+        return redirect(url_for('home_page'))
         
         
         # TODO: log the new user to the session
+        # TODO: clear form
+        # TODO: have parent email opt
+        # TODO: hash password
 
-
+    # Display errors using flashing
     if form.errors != {}:
-        print('there were errors....')
+        # print('there were errors....')
         for err_msg in form.errors.values():
-            print(err_msg)
-    #         flash( f'There was an error with creating a user: {err_msg}', category='danger' )
+            # print(err_msg)
+            flash( f'There was an error with creating a user: {err_msg}', category='danger' )
+            # TODO: fix closing error window
+            # TODO: clear
 
     return render_template('register.html', form=form)
 
