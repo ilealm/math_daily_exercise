@@ -1,12 +1,22 @@
 from datetime import datetime
 from mde import bcrypt
+# for login mgnt
+# UserMixin: this class inherits is_authenticated, is_active, is_annonymous, get_id. 
+# So I don't have to implemented as it says in the docs.
+# I must add it in the User class
+from flask_login import UserMixin
+
+from mde import db, login_manager
 
 
-from mde import db
+# flask_login manager. This is the one that will be accesible from all pages
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(length=30), nullable=False, unique=True)
     email_address = db.Column(db.String(length=50), nullable=False, unique=True)
