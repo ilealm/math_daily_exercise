@@ -3,11 +3,12 @@ from flask import render_template, flash, redirect, url_for, request
 # from flask_login import login_user, logout_user, login_required, current_user
 from flask_login import login_required, current_user
 
-from mde import app #, db
+from mde import app  # , db
 from mde.models import User
-from mde.forms import RegisterForm
+from mde.forms import RegisterForm, LoginForm
 
-from helpers import userToCreate, addUser, logInUser, logOutUser
+from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
+
 
 @app.route('/')
 @app.route('/home')
@@ -29,28 +30,42 @@ def stats_page():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
-    return render_template('login.html')
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        attempted_user = getUser(form.username.data)
+        if attempted_user:
+            if isUserPassword(attempted_user, form.password.data):
+                flash(
+                    f'Success! You are logged in as: {attempted_user.username}', category='success')
+                logInUser(attempted_user)
+                return redirect(url_for('home_page'))
+            else:
+                flash('Invalid password! Please try again', category='danger')
+        else:
+            flash('Invalid user name! Please try again', category='danger')
+
+    return render_template('login.html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
     form = RegisterForm()
 
-
-    if request.method == 'POST' and form.validate_on_submit():   
-        new_user = userToCreate(form)       
+    if request.method == 'POST' and form.validate_on_submit():
+        new_user = getUserToCreate(form)
         addUser(new_user)
         logInUser(new_user)
-        
-        flash( f"Account created successfully! You are now logged in as {new_user.username}.", category='success')
+
+        flash(
+            f"Account created successfully! You are now logged in as {new_user.username}.", category='success')
         return redirect(url_for('home_page'))
-        
 
     # Display errors using flashing
     if form.errors != {}:
         for err_msg in form.errors.values():
-            flash( f'There was an error with creating a user: {err_msg}', category='danger' )
-
+            flash(
+                f'There was an error with creating a user: {err_msg}', category='danger')
 
     return render_template('register.html', form=form)
 
@@ -64,10 +79,9 @@ def logout_page():
     return redirect(url_for("home_page"))
 
 
-
 @app.errorhandler(404)
 def page_not_found(error):
-    # Note the 404 after the render_template() call. This tells Flask that the status code of 
-    # that page should be 404 which means not found. By default 200 is assumed which 
+    # Note the 404 after the render_template() call. This tells Flask that the status code of
+    # that page should be 404 which means not found. By default 200 is assumed which
     # translates to: all went well.
     return render_template('error.html', error=error), 404
