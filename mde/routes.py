@@ -7,7 +7,7 @@ from mde import app #, db
 from mde.models import User
 from mde.forms import RegisterForm, LoginForm
 
-from helpers import userToCreate, addUser, logInUser, logOutUser, usernameExists
+from helpers import userToCreate, addUser, logInUser, logOutUser, getUser, passwordsMatch
 
 @app.route('/')
 @app.route('/home')
@@ -32,10 +32,11 @@ def login_page():
     form = LoginForm()
 
     if form.validate_on_submit():
-        attempted_user = usernameExists(form.username.data) 
+        attempted_user = getUser(form.username.data) 
         if attempted_user:
-            if attempted_user.check_password_correction(attempted_password=form.password.data) :
+            if passwordsMatch(attempted_user, form.password.data) :
                 flash( f'Success! You are logged in as: {attempted_user.username}', category='success')
+                logInUser(attempted_user)
                 return redirect(url_for('home_page'))
             else:
                 flash('Invalid password! Please try again', category='danger')
