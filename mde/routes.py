@@ -6,6 +6,7 @@ from mde import app, db
 from mde.models import User
 from mde.forms import RegisterForm
 
+from helpers import userToCreate
 
 @app.route('/')
 @app.route('/home')
@@ -26,46 +27,27 @@ def register_page():
     form = RegisterForm()
 
 
-    if request.method == 'POST' and form.validate_on_submit():
-        user_to_create = User(
-                            username = form.username.data,
-                            email_address = form.email_address.data,
-                            password = form.password1.data,
-                            parent_email_address = form.parent_email_address.data     )
-        db.session.add(user_to_create)
+    if request.method == 'POST' and form.validate_on_submit():   
+        new_user = userToCreate(form)
+        
+        db.session.add(new_user)
         db.session.commit()
 
         # Log the created user. This will create a current_user, which will be available in every template
-        login_user(user_to_create)
+        login_user(new_user)
         
-        flash( f"Account created successfully! You are now logged in as {user_to_create.username}.", category='success')
+        flash( f"Account created successfully! You are now logged in as {new_user.username}.", category='success')
         return redirect(url_for('home_page'))
         
-        # LOGIN branch
-        # TODO: hash password: done
-        # TODO: log the new user to the session: done
-        # TODO: have parent psw optional: done
-        # TODO: align register form components: done
-        # REGISTER branch
-        # TODO: fix closing flasing windows: done
-        # TODO: add logout route: done
-        # TODO: add logout funcionality: done
-        # TODO: show username when logged: done
-        # TODO: add custom bootstraps: done
-        # TODO: change login ctrol to logut: done
 
-        # TODO: clear register form
-        # TODO: refactor login
-        # TODO: add decorated login_required to routes
+    # Display errors using flashing
+    if form.errors != {}:
+        for err_msg in form.errors.values():
+            flash( f'There was an error with creating a user: {err_msg}', category='danger' )
 
-        # Display errors using flashing
-        if form.errors != {}:
-            # print('there were errors....')
-            for err_msg in form.errors.values():
-                flash( f'There was an error with creating a user: {err_msg}', category='danger' )
 
-    if request.method == 'GET':
-        return render_template('register.html', form=form)
+    # if request.method == 'GET':
+    return render_template('register.html', form=form)
 
 
 @app.route('/logout')
