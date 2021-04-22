@@ -1,18 +1,17 @@
-from flask_login import login_user, logout_user #, login_required, current_user
+from flask_login import login_user, logout_user  # , login_required, current_user
 
 
 from mde.models import User
 from mde import app, db
 
 
-# Function that takes the new user information from a form, and returns a User object.
-def userToCreate(form):
+# Function that takes the new user information from a form, and returns it a User object.
+def getUserToCreate(form):
     return User(
-                username = form.username.data,
-                email_address = form.email_address.data,
-                password = form.password1.data,
-                parent_email_address = form.parent_email_address.data  )
-
+        username=form.username.data,
+        email_address=form.email_address.data,
+        password=form.password1.data,
+        parent_email_address=form.parent_email_address.data)
 
 
 # Helper function that inserts a new user into BD
@@ -21,8 +20,8 @@ def addUser(new_user):
         db.session.add(new_user)
         db.session.commit()
     except AssertionError as error:
-        app.logger.error('An error occurred while adding the user into the database: ', error)
-
+        app.logger.error(
+            'An error occurred while adding the user into the database: ', error)
 
 
 # Function that logs a user into the current session.
@@ -31,8 +30,8 @@ def logInUser(user):
     try:
         login_user(user)
     except AssertionError as error:
-        app.logger.error('An error occurred while login the user to the session: ', error)
-
+        app.logger.error(
+            'An error occurred while login the user to the session: ', error)
 
 
 def logOutUser():
@@ -42,18 +41,20 @@ def logOutUser():
         app.logger.error('An error occurred while logout the user: ', error)
 
 
-
 # function that check if a username exists in the database
 def getUser(username_to_check):
     try:
         return User.query.filter_by(username=username_to_check).first()
     except AssertionError as error:
-        app.logger.error('An error occurred while validating if the username exists: ', error)
+        app.logger.error(
+            'An error occurred while validating if the username exists: ', error)
+
 
 
 # function that check if an attempted password is the same as the User.password_hash
-def passwordsMatch(user, password_to_check):
+def isUserPassword(user, password_to_check):
     try:
         return user.check_password_correction(attempted_password=password_to_check)
     except AssertionError as error:
-        app.logger.error('An error occurred while validating if the attempted password is correct: ', error)
+        app.logger.error(
+            'An error occurred while validating if the attempted password is correct: ', error)
