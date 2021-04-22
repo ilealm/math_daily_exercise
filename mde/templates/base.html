@@ -31,20 +31,34 @@
                     <a class="nav-link active" aria-current="page" style="color:#0a6da6" href="{{ url_for('home_page') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" style="color:#0a6da6" href="#">Play</a>
+                    <a class="nav-link" style="color:#0a6da6" href="{{ url_for('play_page') }}">Play</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" style="color:#0a6da6" href="#">My Stats</a>
+                    <a class="nav-link" style="color:#0a6da6" href="{{ url_for('stats_page') }}">My Stats</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav mb-lg-0">
-                    <li class="nav-item">
-                        <a class="btn btn-outline-success me-2"  aria-current="page"  href="{{ url_for('register_page') }}"">Register</a> 
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-danger me-2"  aria-current="page" href="{{ url_for('login_page') }}">Login</a>
-                    </li>                
-                </ul>
+                
+                <!-- left menu navbar options -->
+                {% if current_user.is_authenticated %}
+                    <ul class="navbar-nav mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link"> You can do this, {{ current_user.username }}!</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger me-2"  aria-current="page" href="{{ url_for('logout_page') }}">Logout</a>
+                        </li>                
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav mb-lg-0">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success me-2"  aria-current="page"  href="{{ url_for('register_page') }}"">Register</a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger me-2"  aria-current="page" href="{{ url_for('login_page') }}">Login</a>
+                        </li>                
+                    </ul>
+                {% endif %}
+
                 </div>
             </div>
         </nav>
@@ -52,15 +66,11 @@
         <!-- Flash error messages, messages I want to display to the user -->
         {%  with messages = get_flashed_messages(with_categories=true)   %}
             {% if messages %}
-            <!-- I have for category, message BC messages has 2 values, and I just want to display the second one -->
                 {% for category, message in messages %}         
-                    <div class="alert alert-{{ category }}">
-                    <!-- bootstraps this is for display the message in a btn that can be closed by the x. -->
-                    <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ message }}
-                </div>
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">             
+                        <button type="button" class="btn-close  " data-bs-dismiss="alert" aria-label="Close"></button>
+                        {{ message }}
+                    </div>
                 {% endfor %}
             {% endif %}
         {%  endwith %}

@@ -21,7 +21,7 @@ class RegisterForm(FlaskForm):
 
 
     # to be able to use validators, I need to import wtforms. If I want to add more than 1 validator, then add []
-    username = StringField(label='User Name', validators=[Length(min=2, max=30), DataRequired()])
+    username = StringField(label='User Name', validators=[Length(min=2, max=30), DataRequired()], default=None)
     email_address = StringField(label='Email Address:', validators=[Email(), DataRequired()])
     password1 = PasswordField(label='Password', validators=[Length(min=6), DataRequired()])
     # I don't need to add the validator to psw2 bc it must be = to psw1
@@ -29,3 +29,4 @@ class RegisterForm(FlaskForm):
     parent_email_address = StringField(label='Parent Email:', validators=[ Email(), Optional() ])
     
     submit = SubmitField(label='Create Account')
+
