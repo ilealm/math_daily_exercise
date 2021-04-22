@@ -37,6 +37,6 @@ TODO: show username when logged: done
 TODO: add custom bootstraps: done
 TODO: change login ctrol to logut: done
 TODO: refactor register_page route: done
+TODO: add decorated login_required to routes: DONE
 
 TODO: clear register form
-TODO: add decorated login_required to routes

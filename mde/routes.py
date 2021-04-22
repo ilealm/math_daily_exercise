@@ -15,6 +15,17 @@ def home_page():
     return render_template('home.html')
 
 
+@app.route('/play')
+@login_required
+def play_page():
+    return render_template('error.html')
+
+
+@app.route('/stats')
+@login_required
+def stats_page():
+    return render_template('error.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -41,7 +52,6 @@ def register_page():
             flash( f'There was an error with creating a user: {err_msg}', category='danger' )
 
 
-    # if request.method == 'GET':
     return render_template('register.html', form=form)
 
 
