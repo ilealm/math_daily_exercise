@@ -39,15 +39,15 @@ def register_page():
         
         
 
-        flash( f"Account created successfully! You are now logged in as {user_to_create.username}", category='success')
+        flash( f"Account created successfully! You are now logged in as {user_to_create.username}.", category='success')
         return redirect(url_for('home_page'))
         
         # LOGIN branch
         # TODO: hash password: done
         # TODO: log the new user to the session: done
         # TODO: have parent psw optional: done
-        # TODO: align register form components
-        # TODO: fix closing error window
+        # TODO: align register form components: done
+        # TODO: fix closing flasing windows
         # TODO: show username when logged
         # TODO: add more friendy error msg on forms
         # TODO: refactor login
