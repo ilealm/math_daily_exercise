@@ -41,3 +41,4 @@ class User(db.Model, UserMixin):
     # to check if the psw is valid while login 
     def check_password_correction(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
+    

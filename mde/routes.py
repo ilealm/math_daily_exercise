@@ -25,6 +25,7 @@ def login_page():
 def register_page():
     form = RegisterForm()
 
+
     if request.method == 'POST' and form.validate_on_submit():
         user_to_create = User(
                             username = form.username.data,
@@ -37,8 +38,6 @@ def register_page():
         # Log the created user. This will create a current_user, which will be available in every template
         login_user(user_to_create)
         
-        
-
         flash( f"Account created successfully! You are now logged in as {user_to_create.username}.", category='success')
         return redirect(url_for('home_page'))
         
@@ -49,23 +48,24 @@ def register_page():
         # TODO: align register form components: done
         # REGISTER branch
         # TODO: fix closing flasing windows: done
-        # TODO: add logout: done
-        # TODO: show username when logged
-        # TODO: add more friendy error msg on forms
-        # TODO: refactor login
-        # TODO: add custom bootstraps
-        # TODO: change login ctrol to logut
-        # TODO: add decorated login_required to routes
-        # TODO: clear form
-        # TODO: add login_required to routes
+        # TODO: add logout route: done
+        # TODO: add logout funcionality: done
+        # TODO: show username when logged: done
+        # TODO: add custom bootstraps: done
+        # TODO: change login ctrol to logut: done
 
-    # Display errors using flashing
-    if form.errors != {}:
-        # print('there were errors....')
-        for err_msg in form.errors.values():
-            flash( f'There was an error with creating a user: {err_msg}', category='danger' )
-        
-    return render_template('register.html', form=form)
+        # TODO: clear register form
+        # TODO: refactor login
+        # TODO: add decorated login_required to routes
+
+        # Display errors using flashing
+        if form.errors != {}:
+            # print('there were errors....')
+            for err_msg in form.errors.values():
+                flash( f'There was an error with creating a user: {err_msg}', category='danger' )
+
+    if request.method == 'GET':
+        return render_template('register.html', form=form)
 
 
 @app.route('/logout')
