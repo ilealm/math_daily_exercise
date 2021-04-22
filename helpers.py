@@ -40,3 +40,12 @@ def logOutUser():
         logout_user()
     except AssertionError as error:
         app.logger.error('An error occurred while logout the user: ', error)
+
+
+
+# function that check if a username exists in the database
+def usernameExists(username_to_check):
+    try:
+        return User.query.filter_by(username=username_to_check).first()
+    except AssertionError as error:
+        app.logger.error('An error occurred while validating if the username exists: ', error)

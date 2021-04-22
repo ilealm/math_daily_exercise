@@ -5,9 +5,9 @@ from flask_login import login_required, current_user
 
 from mde import app #, db
 from mde.models import User
-from mde.forms import RegisterForm
+from mde.forms import RegisterForm, LoginForm
 
-from helpers import userToCreate, addUser, logInUser, logOutUser
+from helpers import userToCreate, addUser, logInUser, logOutUser, usernameExists
 
 @app.route('/')
 @app.route('/home')
@@ -29,7 +29,21 @@ def stats_page():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
-    return render_template('login.html')
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        attempted_user = usernameExists(form.username.data) 
+        if attempted_user:
+            if attempted_user.check_password_correction(attempted_password=form.password.data) :
+                flash( f'Success! You are logged in as: {attempted_user.username}', category='success')
+                return redirect(url_for('home_page'))
+            else:
+                flash('Invalid password! Please try again', category='danger')
+        else:
+            flash('Invalid user name! Please try again', category='danger')
+
+    return render_template('login.html', form=form)
+
 
 
 @app.route('/register', methods=['GET', 'POST'])

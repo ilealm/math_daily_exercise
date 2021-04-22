@@ -1,20 +1,55 @@
 {% extends 'base.html' %}
+ 
 {% block title %}
-    Please Login
+    Login Page
 {% endblock %}
 
 {% block content %}
-    <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light text-center ">
-        <h1>
-            <label type="text" style="color:red"> Math</label>  
-            <label type="text" style="color:green"> Daily</label>  
-            <label type="text" style="color:purple"> Exercises</label>  
-            <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
-        </h1>
-        <br>       
-        <h4> 
-            Welcome back! Please Login
-        </h4>
+    <div class="container ">       
+        <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light text-center " >
+            <h1>
+                <label type="text" style="color:red"> Math</label>  
+                <label type="text" style="color:green"> Daily</label>  
+                <label type="text" style="color:purple"> Exercises</label>  
+                <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
+            </h1>
+            <br>             
+            <!-- <p class="h5"> Please fill the information for your new Account </p>    -->
+            <small class="text-muted"> Doesn't have an account? </small> 
+            <br>
+            <a class="btn btn-outline-danger me-2" href="{{ url_for('register_page') }}">Register</a>
+
+        </div>
+
+        <div class=" mx-auto pt-2 " style=" width: fit-content; ">
+                <form method='POST' class="form-register " >       
+                    <!-- the next line is to secure the page from CSTF attacks -->
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-4 col-form-label"> 
+                            {{ form.username.label() }}  </label>
+                        <div class="col-sm-8">
+                            {{ form.username(class="form-control ", placeholder='User name' )}}    
+                       
+                        </div>
+                    </div>
+                       
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-4 col-form-label"> 
+                            {{ form.password.label() }}  </label>
+                        <div class="col-sm-8">
+                            {{ form.password(class="form-control", placeholder='Password') }}     
+                        </div>
+                    </div>
+        
+                    <div class="text-center">
+                        {{ form.submit(class="btn btn-lg btn-block btn-primary ") }}
+                    </div>
+                </form>
+        </div>
 
     </div>
+
+
 {% endblock %}

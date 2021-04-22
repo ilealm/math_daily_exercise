@@ -40,3 +40,10 @@ TODO: refactor register_page route: done
 TODO: add decorated login_required to routes: DONE
 
 TODO: clear register form
+
+# LOGIN_V2 branch
+TODO: create template/login.html
+TODO: create loginForm
+TODO: create mgnt on route login_page
+TODO: 
+TODO: 
