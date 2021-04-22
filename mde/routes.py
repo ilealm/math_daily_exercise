@@ -47,13 +47,14 @@ def register_page():
         # TODO: log the new user to the session: done
         # TODO: have parent psw optional: done
         # TODO: align register form components: done
-        # TODO: fix closing flasing windows
+        # REGISTER branch
+        # TODO: fix closing flasing windows: done
+        # TODO: add logout: done
         # TODO: show username when logged
         # TODO: add more friendy error msg on forms
         # TODO: refactor login
         # TODO: add custom bootstraps
         # TODO: change login ctrol to logut
-        # TODO: add logout
         # TODO: add decorated login_required to routes
         # TODO: clear form
         # TODO: add login_required to routes
@@ -67,6 +68,12 @@ def register_page():
     return render_template('register.html', form=form)
 
 
+@app.route('/logout')
+def logout_page():
+    # built in fun in flask to logout users
+    logout_user()
+    flash("You have been logged out!", category='info')
+    return redirect(url_for("home_page"))
 
 
 @app.errorhandler(404)
