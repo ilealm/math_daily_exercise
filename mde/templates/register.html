@@ -20,51 +20,54 @@
             <a class="btn btn-outline-danger me-2" href="{{ url_for('login_page') }}">Login</a>
 
         </div>
-        <!-- m-md-3  -->
-        <div class=" mx-auto w-50 overflow-hidden" style="border-style: solid ; border-color: white; ">
-            <!-- <div class=" " style="border-style: solid ; border-color: blue; "> -->
+        <!-- 
+            mx-auto: centers the div
+            pt-2: add top paddig of 2
+            width: fit-content: makes the div of the space of the elements. So the input are not too big.
+        -->
+        <div class=" mx-auto pt-2 " style=" width: fit-content; ">
                 <form method='POST' class="form-register " >       
                     <!-- the next line is to secure the page from CSTF attacks -->
                     {{ form.hidden_tag() }}
                     
                     <div class="row mb-3">
-                        <label for="colFormLabel" class="col-sm-3 col-form-label"> 
+                        <label for="colFormLabel" class="col-sm-4 col-form-label"> 
                             {{ form.username.label() }}  </label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <!-- {{ form.username(class="form-control w-75 ", placeholder='Username') }}       -->
                             {{ form.username(class="form-control ", placeholder='Username') }}      
                         </div>
                     </div>
     
                     <div class="row mb-3">
-                        <label for="colFormLabel" class="col-sm-3 col-form-label"> 
+                        <label for="colFormLabel" class="col-sm-4 col-form-label"> 
                             {{ form.email_address.label() }}  </label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             {{ form.email_address(class="form-control", placeholder='Email Address') }}        
                         </div>
                     </div>
     
                     <div class="row mb-3">
-                        <label for="colFormLabel" class="col-sm-3 col-form-label"> 
+                        <label for="colFormLabel" class="col-sm-4 col-form-label"> 
                             {{ form.password1.label() }}  </label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             {{ form.password1(class="form-control", placeholder='Password') }}     
                         </div>
                     </div>
     
                     <div class="row mb-3">
-                        <label for="colFormLabel" class="col-sm-3 col-form-label"> 
+                        <label for="colFormLabel" class="col-sm-4 col-form-label"> 
                             {{ form.password2.label() }}  </label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             {{ form.password2(class="form-control", placeholder='Confirm Password') }}  
                         </div>
                     </div>
     
                     <div class="row mb-3">
     
-                        <label for="colFormLabel" class="col-sm-3 col-form-label"> 
+                        <label for="colFormLabel" class="col-sm-4 col-form-label"> 
                             {{ form.parent_email_address.label() }}  </label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             {{ form.parent_email_address(class="form-control", placeholder='Parent Email Address') }} 
                             <label class="col-sm- col-form-label col-form-label-sm"> 
                                 If you want to send your results to a parent, please add its email address
@@ -79,5 +82,6 @@
         </div>
 
     </div>
+
 
 {% endblock %}
