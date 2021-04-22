@@ -1,4 +1,4 @@
-from flask_login import login_user #, logout_user, login_required, current_user
+from flask_login import login_user, logout_user #, login_required, current_user
 
 
 from mde.models import User
@@ -27,8 +27,16 @@ def addUser(new_user):
 
 # Function that logs a user into the current session.
 # This will create a current_user, which will be available in every template
-def logUser(user):
+def logInUser(user):
     try:
         login_user(user)
     except AssertionError as error:
         app.logger.error('An error occurred while login the user to the session: ', error)
+
+
+
+def logOutUser():
+    try:
+        logout_user()
+    except AssertionError as error:
+        app.logger.error('An error occurred while logout the user: ', error)

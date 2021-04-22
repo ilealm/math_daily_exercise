@@ -1,13 +1,13 @@
 from flask import render_template, flash, redirect, url_for, request
 # I can also use the declarator loggin_required to force routes to be logged
 # from flask_login import login_user, logout_user, login_required, current_user
-from flask_login import logout_user, login_required, current_user
+from flask_login import login_required, current_user
 
 from mde import app #, db
 from mde.models import User
 from mde.forms import RegisterForm
 
-from helpers import userToCreate, addUser, logUser
+from helpers import userToCreate, addUser, logInUser, logOutUser
 
 @app.route('/')
 @app.route('/home')
@@ -29,7 +29,7 @@ def register_page():
     if request.method == 'POST' and form.validate_on_submit():   
         new_user = userToCreate(form)       
         addUser(new_user)
-        logUser(new_user)
+        logInUser(new_user)
         
         flash( f"Account created successfully! You are now logged in as {new_user.username}.", category='success')
         return redirect(url_for('home_page'))
@@ -47,10 +47,12 @@ def register_page():
 
 @app.route('/logout')
 def logout_page():
-    # built in fun in flask to logout users
-    logout_user()
+    logOutUser()
+
     flash("You have been logged out!", category='info')
+
     return redirect(url_for("home_page"))
+
 
 
 @app.errorhandler(404)
