@@ -51,3 +51,4 @@ TODO: create mgnt on route login_page : done
 
 TODO: 
 TODO: 
+TODO: redisign register and login layout
