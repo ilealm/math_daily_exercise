@@ -1,24 +1,23 @@
 from flask import render_template, flash, redirect, url_for, request
 # I can also use the declarator loggin_required to force routes to be logged
-from flask_login import login_user, logout_user, login_required, current_user
+# from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import logout_user, login_required, current_user
 
-from mde import app, db
+from mde import app #, db
 from mde.models import User
 from mde.forms import RegisterForm
 
-from helpers import userToCreate
+from helpers import userToCreate, addUser, logUser
 
 @app.route('/')
 @app.route('/home')
 def home_page():
-    # TODO: add logged declarator
     return render_template('home.html')
 
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
-    # app.logger.debug('test logger')
     return render_template('login.html')
 
 
@@ -28,13 +27,9 @@ def register_page():
 
 
     if request.method == 'POST' and form.validate_on_submit():   
-        new_user = userToCreate(form)
-        
-        db.session.add(new_user)
-        db.session.commit()
-
-        # Log the created user. This will create a current_user, which will be available in every template
-        login_user(new_user)
+        new_user = userToCreate(form)       
+        addUser(new_user)
+        logUser(new_user)
         
         flash( f"Account created successfully! You are now logged in as {new_user.username}.", category='success')
         return redirect(url_for('home_page'))
