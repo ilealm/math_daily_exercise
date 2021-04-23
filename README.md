@@ -47,8 +47,16 @@ TODO: create loginForm : done
 TODO: create mgnt on route login_page : done
 
 
-#  branch
+# play branch
 
+TODO: create play.html: select tables to practice, number of games
+TODO: play logic
+TODO: show results
+TODO: save game
+TODO: reestart game
 TODO: 
-TODO: 
+
+
+
 TODO: redisign register and login layout
+TODO: auto-fase flash windows

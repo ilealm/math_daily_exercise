@@ -19,7 +19,7 @@ def home_page():
 @app.route('/play')
 @login_required
 def play_page():
-    return render_template('error.html')
+    return render_template('play.html')
 
 
 @app.route('/stats')
