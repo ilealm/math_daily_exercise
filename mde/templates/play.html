@@ -5,91 +5,87 @@
 {% endblock %}
 
 {% block content %}
-<!-- <button type="button" class="btn btn-primary">
-    Exercises <span class="badge badge-light">4</span>
-  </button> -->
-    <!-- <h4> 
-        Let's configure your game<em>!</em>
-    </h4> -->
 
-    <div class=" pt-3 container" style="border-style: solid; border-color: white;" >               
-        <div class="container px-4">
-            <!-- gx-5 gives the padding between cards -->
-            <div class="row " style="border-style: solid; border-color: white;">
-                
-
-                <p class="h3 text-center pb-3  text-danger ">
-
-                    Let's configure your game <em class=" text-warning ">!</em>
-                    <!-- <small class="text-muted"> Today is a great dat to change yourself</small> -->
+    <div class="container  pt-3 px-4" style="border-style: solid; border-color: white;" >
+        <!-- gx-5 gives the padding between cards -->
+        <div class="row text-center" style="border-style: solid; border-color:white;">               
+            <!-- title seccion -->
+            <div class="titles">                    
+                <p class="h3  pb-2 text-indigo ">                    
+                    Let's configure your game 
+                    <em class="text-warning">!</em>
                 </p>
-
-
+                <p class="subTitles pb-4 "> Today is a great day to change yourself</p>
             </div>
-            <div class="row gx-5">
-                <!-- Tables selection  -->
-                <div class="col">
-                    <div class="p-3 border bg-light">
-                        
+        </div>
+        <!-- cards selection (tables to practice and mode) -->
+        <div class="row gx-5">
+            <div class="col">
+                <div class="p-3 border bg-light">
+                    
+                    <!-- card component -->
+                    <div class="card">
+                        <div class="card-header">
+                            Select tables to practice
+                        </div>
+                        <div class="card-body">                              
+                            <div  class="row  ">
+                                <div class="col-md-3 " >
+                                    <label for="inputNumber" class="form-label">From</label>
+                                    <input type="number" class="form-control" id="from">
+                                </div>
+
+                                <div class="col-md-3  ">
+                                    <label for="inputTo" class="form-label">To</label>
+                                    <input type="number" class="form-control" id="to">
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+                </div>
+            <!-- Mode  -->                   
+            </div>
+            <div class="col">
+                <div class="p-3 border bg-light">
                         <!-- card component -->
                         <div class="card">
-                            <div class="card-header">
-                              Select tables to practice
-                            </div>
-                            <div class="card-body">                              
-                                <div  class="row  ">
+                        <div class="card-header">
+                            Select mode to practice
+                        </div>
+                        <div class="card-body">                              
+                            <div class="form-check">
+                                <div  class="row pb-3 ">
                                     <div class="col-md-3 " >
-                                        <label for="inputNumber" class="form-label">From</label>
-                                        <input type="number" class="form-control" id="from">
+                                        <input type="number" class="form-control" id="amount">
                                     </div>
     
-                                    <div class="col-md-3  ">
-                                        <label for="inputTo" class="form-label">To</label>
-                                        <input type="number" class="form-control" id="to">
+                                    <div class="col-md ">                                                 
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                Exercises
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                Minutes
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
 
-                            </div>
-                          </div>
-                    </div>
-                <!-- Mode  -->                   
-                </div>
-                <div class="col">
-                    <div class="p-3 border bg-light">
-                         <!-- card component -->
-                         <div class="card">
-                            <div class="card-header">
-                              Select mode to practice
-                            </div>
-                            <div class="card-body">                              
-                                <div class="form-check">
-                                    <div  class="row pb-3 ">
-                                        <div class="col-md-3 " >
-                                            <input type="number" class="form-control" id="amount">
-                                        </div>
-        
-                                        <div class="col-md ">                                                 
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                  Exercises
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                                <label class="form-check-label" for="exampleRadios2">
-                                                  Minutes
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-    
-                                  </div>
-                            </div>
-                          </div>
-                    </div>
+                                </div>
+                        </div>
+                        </div>
                 </div>
             </div>
+        </div>
+        <!-- play btn -->
+        <div class="pt-5 text-center">
+            <a class="btn btn-lg btn-outline-danger "  aria-current="page" href="{{ url_for('login_page') }}">Play!</a>
+            
         </div>
     </div>
 
