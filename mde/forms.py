@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional
 
 from mde.models import User
@@ -36,3 +36,7 @@ class LoginForm(FlaskForm):
     username = StringField(label='User Name:', validators=[DataRequired()])
     password = PasswordField(label='Password:', validators=[DataRequired()])
     submit = SubmitField(label='Sign in')
+
+
+class PlayForm(FlaskForm):
+    range_from = IntegerField(label='From', validators=[DataRequired()], default=1)
