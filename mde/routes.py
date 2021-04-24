@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 
 from mde import app  # , db
 from mde.models import User
-from mde.forms import RegisterForm, LoginForm
+from mde.forms import RegisterForm, LoginForm, PlayForm
 
 from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
 
@@ -19,7 +19,8 @@ def home_page():
 @app.route('/play')
 @login_required
 def play_page():
-    return render_template('play.html')
+    form = PlayForm()
+    return render_template('play.html', form=form)
 
 
 @app.route('/stats')
