@@ -9,7 +9,7 @@ from mde.forms import RegisterForm, LoginForm, PlayForm
 from wtforms.validators import ValidationError
 
 from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
-from helpers import range_table_values
+from helpers import range_table_values, get_exercises
 
 @app.route('/')
 @app.route('/home')
@@ -23,12 +23,13 @@ def play_page():
     form = PlayForm()
 
     if form.validate_on_submit():
-        print(form.range_from.data)
-        print(form.range_to.data)
-        print(form.amount.data)
-        print(form.mode.data)
+        range_from = form.range_from.data
+        range_to = form.range_to.data
+        amount =  form.amount.data
+        mode = form.mode.data
    
-        pass
+        if mode == 'Exercises':            
+            return render_template('game.html', exercises=get_exercises(range_from, range_to, amount) )
 
     # Display errors using flashing
     if form.errors != {}:
@@ -37,6 +38,14 @@ def play_page():
                 f'There were errors while creating the game: {err_msg}', category='danger')
 
     return render_template('play.html', form=form, range_table_values=range_table_values)
+
+
+
+@app.route('/game')
+@login_required
+def game_page():
+    return home_template('home.html')
+
 
 
 @app.route('/stats')

@@ -1,5 +1,5 @@
 from flask_login import login_user, logout_user  # , login_required, current_user
-
+import random
 
 from mde.models import User
 from mde import app, db
@@ -60,3 +60,28 @@ def isUserPassword(user, password_to_check):
     except AssertionError as error:
         app.logger.error(
             'An error occurred while validating if the attempted password is correct: ', error)
+
+
+
+def get_exercises(range_from, range_to, amount=1):
+    exercises = []
+    for i in range(amount):
+        exercises.append(get_multiplication_obj(range_from, range_to))
+
+    return exercises
+
+
+# Function that given range, returns an object with factor a, factor b, the multiplication result and user result with value none
+# {'factor_a': 9, 'factor_b': 4, 'result': 36, 'user_result': None}
+def get_multiplication_obj( range_from, range_to):
+    range_from = int(range_from)
+    range_to = int(range_to)
+
+    factor_a = random.randint(range_from, range_to)
+    factor_b = random.randint(range_from, range_to)
+    return ({
+            'factor_a' : factor_a,
+             'factor_b' : factor_b,
+             'result' : factor_a * factor_b,
+             'user_result' : None           
+            })
