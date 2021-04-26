@@ -8,7 +8,7 @@ from mde.models import User
 from mde.forms import RegisterForm, LoginForm, PlayForm
 
 from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
-
+from helpers import range_table_values
 
 @app.route('/')
 @app.route('/home')
@@ -16,11 +16,21 @@ def home_page():
     return render_template('home.html')
 
 
-@app.route('/play')
+@app.route('/play', methods=['GET', 'POST'])
 @login_required
 def play_page():
     form = PlayForm()
-    return render_template('play.html', form=form)
+
+    if form.validate_on_submit():
+        print('on submit')
+
+    # Display errors using flashing
+    if form.errors != {}:
+        for err_msg in form.errors.values():
+            flash(
+                f'There were errors while creating the game: {err_msg}', category='danger')
+
+    return render_template('play.html', form=form, range_table_values=range_table_values)
 
 
 @app.route('/stats')
@@ -47,6 +57,7 @@ def login_page():
             flash('Invalid user name! Please try again', category='danger')
 
     return render_template('login.html', form=form)
+
 
 
 @app.route('/register', methods=['GET', 'POST'])

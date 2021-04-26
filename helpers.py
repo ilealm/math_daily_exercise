@@ -5,6 +5,8 @@ from mde.models import User
 from mde import app, db
 
 
+range_table_values =[2,3,4,5,6,7,8,9,10]
+
 # Function that takes the new user information from a form, and returns it a User object.
 def getUserToCreate(form):
     return User(

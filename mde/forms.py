@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional
+from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional, NumberRange
 
 from mde.models import User
 
@@ -38,5 +38,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField(label='Sign in')
 
 
-class PlayForm(FlaskForm):
-    range_from = IntegerField(label='From', validators=[DataRequired()], default=1)
+class PlayForm(FlaskForm):    
+    amount = IntegerField(label='Amount', validators=[
+                        DataRequired(message='The amount is required.'), 
+                        NumberRange(min= 1, max= 30, message='The amount per game must be between 1 and 30.') 
+                        ], default=15 )
+    submit = SubmitField(label='Play!')
+    
