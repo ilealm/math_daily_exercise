@@ -16,11 +16,27 @@
             <br>                         
         </div>
 
-        <div class="container  pt-3 px-4" style="border-style: solid; border-color: red;" >
-            
-        
+        <div class="container w-50 pt-3 px-4" style="border-style: solid; border-color: white;" >
+            <form method='POST' action='/game' class="form-register " >    
+                <div class="container">
+                    {% for op in exercises  %}
+                        <div class="row justify-content-md-center align-items-center p-2 card-bg " style="border-style: solid; border-color: white;" >
+                            <div class="col col-lg-2">
+                                {{ op.factor_a }} X {{ op.factor_b }}        
+                            </div>
+                            <div class="col-md-auto w-25">
+                                <input type="number" class="form-control " id="exampleInputEmail1">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="pt-5 text-center">
+                    <button type="submit" class="bbtn btn-lg btn-outline-danger"> Check results </button>
+                </div>
+            </form>   
 
-  {{exercises}}
+
+  
         </div>
 
     </div>

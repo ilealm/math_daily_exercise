@@ -41,10 +41,13 @@ def play_page():
 
 
 
-@app.route('/game')
+@app.route('/game', methods=['POST'])
 @login_required
 def game_page():
-    return home_template('home.html')
+    if request.method == 'POST':
+        print('in post')
+
+    return render_template('home.html')
 
 
 
@@ -107,6 +110,7 @@ def logout_page():
 
 
 @app.errorhandler(404)
+@app.errorhandler(405)
 def page_not_found(error):
     # Note the 404 after the render_template() call. This tells Flask that the status code of
     # that page should be 404 which means not found. By default 200 is assumed which
