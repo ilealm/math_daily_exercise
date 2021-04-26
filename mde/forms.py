@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional, NumberRange
+from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional, NumberRange, InputRequired
 
 from mde.models import User
 
 
 TABLES_RANGE = [(2,'2'),(3,'3'),(4,'4'),(5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9'),(10,'10') ]
-PLAY_MODES = [(1,'Exercises'), (2, 'Minutes')]
+PLAY_MODES = ['Exercises', 'Minutes']
 
 class RegisterForm(FlaskForm):
     # Flask will execute this functions auto on form.validate_on_submit()
@@ -49,10 +49,12 @@ class PlayForm(FlaskForm):
                         DataRequired(message='The amount is required.'), 
                         NumberRange(min= 1, max= 30, message='The amount per game must be an integer between 1 and 30.') 
                         ], default=15 )
-    mode = RadioField(u'Mode', choices=PLAY_MODES, default=1)
+    mode = RadioField(u'Mode', choices=PLAY_MODES, default=1, validators=[
+                        # in order to display this message, this MUST BE InputRequired, NOT DataRequired.
+                        InputRequired(message = "Please select a practice mode.") ]    )
     submit = SubmitField(label='Play!')
     
-    
+
     def validate_range_from(form, range_from_to_check ):
         if int(range_from_to_check.data) >= int(form.range_to.data):
             raise ValidationError('Table from must be smallest than table to.')

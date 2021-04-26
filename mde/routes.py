@@ -23,7 +23,10 @@ def play_page():
     form = PlayForm()
 
     if form.validate_on_submit():
-        # print('on submit')
+        print(form.range_from.data)
+        print(form.range_to.data)
+        print(form.amount.data)
+        print(form.mode.data)
    
         pass
 
