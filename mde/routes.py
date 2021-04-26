@@ -6,6 +6,7 @@ from flask_login import login_required, current_user
 from mde import app  # , db
 from mde.models import User
 from mde.forms import RegisterForm, LoginForm, PlayForm
+from wtforms.validators import ValidationError
 
 from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
 from helpers import range_table_values
@@ -22,7 +23,9 @@ def play_page():
     form = PlayForm()
 
     if form.validate_on_submit():
-        print('on submit')
+        # print('on submit')
+   
+        pass
 
     # Display errors using flashing
     if form.errors != {}:

@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional, NumberRange
 
 from mde.models import User
 
+
+TABLES_RANGE = [(2,'2'),(3,'3'),(4,'4'),(5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9'),(10,'10') ]
 
 class RegisterForm(FlaskForm):
     # Flask will execute this functions auto on form.validate_on_submit()
@@ -39,9 +41,15 @@ class LoginForm(FlaskForm):
 
 
 class PlayForm(FlaskForm):    
+    range_from = SelectField(u'From', choices=TABLES_RANGE )
+    range_to = SelectField(u'To', choices=TABLES_RANGE, default=10 ) 
     amount = IntegerField(label='Amount', validators=[
                         DataRequired(message='The amount is required.'), 
-                        NumberRange(min= 1, max= 30, message='The amount per game must be between 1 and 30.') 
+                        NumberRange(min= 1, max= 30, message='The amount per game must be an integer between 1 and 30.') 
                         ], default=15 )
     submit = SubmitField(label='Play!')
     
+    def validate_range_from(form, range_from_to_check ):
+        if int(range_from_to_check.data) >= int(form.range_to.data):
+            raise ValidationError('Table from must be smallest than table to.')
+

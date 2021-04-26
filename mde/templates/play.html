@@ -34,27 +34,11 @@
                                 <div  class="row  ">
                                     <div class="col-md-3 " >
                                         <label for="inputNumber" class="form-label">From</label>
-                                        <select class="form-select" id="range_from">
-                                            {% for num in range_table_values %}
-                                                {% if num == 2 %}
-                                                    <option value="{{ num }}" selected> {{ num }}</option>
-                                                {% else %}
-                                                    <option value="{{ num }}"> {{ num }}</option>
-                                                {% endif %}
-                                            {% endfor %}
-                                          </select>
+                                        {{ form.range_from(class="form-select") }}    
                                     </div>
                                     <div class="col-md-3  ">
                                         <label for="inputTo" class="form-label">To</label>
-                                        <select class="form-select" id="range_to">
-                                            {% for num in range_table_values %}
-                                                {% if num == 10 %}
-                                                    <option value="{{ num }}" selected> {{ num }}</option>
-                                                {% else %}
-                                                    <option value="{{ num }}"> {{ num }}</option> 
-                                                {% endif %}
-                                            {% endfor %}
-                                          </select>
+                                        {{ form.range_to(class="form-select") }}    
                                     </div>
                                 </div>
 
