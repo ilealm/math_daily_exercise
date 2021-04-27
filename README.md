@@ -58,7 +58,8 @@ TODO: Fix range to to 10: done
 TODO: Add message "needs to be an integer" to amount
 
 TODO: in select to, select 10 as default: done
-TODO: validation on from less than to
+TODO: validation on from less than to: done
+TODO: set cursor on 1st input: done
 TODO: play logic
 TODO: show results
 TODO: save game

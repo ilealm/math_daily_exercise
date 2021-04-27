@@ -1,15 +1,19 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session
 # I can also use the declarator loggin_required to force routes to be logged
 # from flask_login import login_user, logout_user, login_required, current_user
 from flask_login import login_required, current_user
 
 from mde import app  # , db
 from mde.models import User
-from mde.forms import RegisterForm, LoginForm, PlayForm
+from mde.forms import RegisterForm, LoginForm, PlayForm, GameForm
 from wtforms.validators import ValidationError
 
+# user management
 from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
-from helpers import range_table_values, get_exercises
+# session management
+from helpers import save_game_in_session, remove_game_in_session
+from helpers import range_table_values
+
 
 @app.route('/')
 @app.route('/home')
@@ -23,13 +27,18 @@ def play_page():
     form = PlayForm()
 
     if form.validate_on_submit():
-        range_from = form.range_from.data
-        range_to = form.range_to.data
-        amount =  form.amount.data
-        mode = form.mode.data
-   
-        if mode == 'Exercises':            
-            return render_template('game.html', exercises=get_exercises(range_from, range_to, amount) )
+        remove_game_in_session()
+        save_game_in_session(form)
+        # range_from = form.range_from.data
+        # range_to = form.range_to.data
+        # amount =  form.amount.data
+        # mode = form.mode.data
+        # exercises = get_exercises(range_from, range_to, amount) 
+        # session permanent = False #  If set to False (which is the default) the session will be deleted when the user closes the browser.
+
+        # if form.mode.data == 'Exercises':            
+        return redirect(url_for('game_page'))
+            
 
     # Display errors using flashing
     if form.errors != {}:
@@ -41,13 +50,21 @@ def play_page():
 
 
 
-@app.route('/game', methods=['POST'])
+
+@app.route('/game', methods=['GET', 'POST'])
 @login_required
 def game_page():
-    if request.method == 'POST':
-        print('in post')
+    if not 'game' in session:
+        flash(f'Please configure your game to start playing. ', category='danger')
+        return redirect(url_for('play_page'))
+        
+    form = GameForm()
+    # TODO: if there is not a game in session, send it back to play
 
-    return render_template('home.html')
+    if request.method == 'POST':
+        print('\n\n\n in game/post\n\n\n')
+
+    return render_template('game.html', form=form)
 
 
 
@@ -103,6 +120,7 @@ def register_page():
 @app.route('/logout')
 def logout_page():
     logOutUser()
+    remove_game_in_session()
 
     flash("You have been logged out!", category='info')
 

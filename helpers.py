@@ -1,4 +1,5 @@
-from flask_login import login_user, logout_user  # , login_required, current_user
+from flask_login import login_user, logout_user
+from  flask import session
 import random
 
 from mde.models import User
@@ -63,25 +64,49 @@ def isUserPassword(user, password_to_check):
 
 
 
+# Function thar returns an array with N multiplication objects for a given tables range. 
+# If N (amount) is not especified, then only 1 exercise is returned
 def get_exercises(range_from, range_to, amount=1):
     exercises = []
     for i in range(amount):
-        exercises.append(get_multiplication_obj(range_from, range_to))
+        exercises.append(get_multiplication_obj(range_from, range_to, i))
 
     return exercises
 
 
-# Function that given range, returns an object with factor a, factor b, the multiplication result and user result with value none
-# {'factor_a': 9, 'factor_b': 4, 'result': 36, 'user_result': None}
-def get_multiplication_obj( range_from, range_to):
+# Function that given range, returns a single object with factor a, factor b, the multiplication result and user result with value none
+# { id:1, 'factor_a': 9, 'factor_b': 4, 'result': 36, 'user_result': None}
+def get_multiplication_obj( range_from, range_to, id=1):
     range_from = int(range_from)
     range_to = int(range_to)
 
     factor_a = random.randint(range_from, range_to)
     factor_b = random.randint(range_from, range_to)
     return ({
+            'id': id,
             'factor_a' : factor_a,
              'factor_b' : factor_b,
              'result' : factor_a * factor_b,
              'user_result' : None           
             })
+
+
+# Function that receives a playform and save the play configuration into the session
+def save_game_in_session(play_form):
+    game = { 
+        'range_from' : play_form.range_from.data,
+        'range_to' : play_form.range_to.data,
+        'amount' : play_form.amount.data,
+        'mode' : play_form.mode.data,
+        'exercises' : get_exercises(play_form.range_from.data, play_form.range_to.data, play_form.amount.data) 
+    }
+    session['game']= game
+
+    # print('in save session: test ', session['game']['amount'])
+    print(session['game'])
+
+
+
+def remove_game_in_session():
+    session.pop('game', None)
+    

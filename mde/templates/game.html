@@ -14,24 +14,28 @@
                 <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
             </h1>
             <br>                         
-        </div>
-
+    </div>
         <div class="container w-50 pt-3 px-4" style="border-style: solid; border-color: white;" >
             <form method='POST' action='/game' class="form-register " >    
+                <input type="number" class="form-control " id="test" value="100">
                 <div class="container">
-                    {% for op in exercises  %}
+                    <!-- {% for op in exercises  %}
                         <div class="row justify-content-md-center align-items-center p-2 card-bg " style="border-style: solid; border-color: white;" >
                             <div class="col col-lg-2">
-                                {{ op.factor_a }} X {{ op.factor_b }}        
+                                {{ op.factor_a }} * {{ op.factor_b }}     
                             </div>
                             <div class="col-md-auto w-25">
-                                <input type="number" class="form-control " id="exampleInputEmail1">
+                                {% if op.id == 0 %}
+                                    <input type="number" class="form-control " id="{{op.id}}" required autofocus >
+                                {% else %}
+                                    <input type="number" class="form-control " id="{{op.id}}" required>
+                                {% endif %}
                             </div>
                         </div>
-                    {% endfor %}
+                    {% endfor %} -->
                 </div>
                 <div class="pt-5 text-center">
-                    <button type="submit" class="bbtn btn-lg btn-outline-danger"> Check results </button>
+                    {{ form.submit(class="btn btn-lg btn-outline-danger ") }}
                 </div>
             </form>   
 

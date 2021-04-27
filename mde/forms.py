@@ -48,7 +48,7 @@ class PlayForm(FlaskForm):
     amount = IntegerField(label='Amount', validators=[
                         DataRequired(message='The amount is required.'), 
                         NumberRange(min= 1, max= 30, message='The amount per game must be an integer between 1 and 30.') 
-                        ], default=5 )
+                        ], default=3 )
     mode = RadioField(u'Mode', choices=PLAY_MODES, default=1, validators=[
                         # in order to display this message, this MUST BE InputRequired, NOT DataRequired.
                         InputRequired(message = "Please select a practice mode.") ]    )
@@ -59,3 +59,9 @@ class PlayForm(FlaskForm):
         if int(range_from_to_check.data) >= int(form.range_to.data):
             raise ValidationError('Table from must be smallest than table to.')
 
+
+
+
+class GameForm(FlaskForm):    
+    test = StringField(label='test',  default=100 )
+    submit = SubmitField(label='Check')
