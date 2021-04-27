@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField, FieldList, FormField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField, FieldList, FormField, HiddenField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional, NumberRange, InputRequired
 
 from mde.models import User
@@ -65,8 +65,12 @@ class PlayForm(FlaskForm):
 
 
 class OperationForm(FlaskForm):
-
-    result = IntegerField(label='result', validators=[
+    # HiddenField
+    num_operacion = HiddenField(label='num_operacion')
+    factor_a = StringField()
+    factor_b = StringField(label='factor_b')
+    result = StringField(label='factor_b')    
+    user_result = IntegerField(label='result', validators=[
                         DataRequired(message='Please enter your result.'), ])
 
 

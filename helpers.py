@@ -75,7 +75,7 @@ def get_exercises(range_from, range_to, amount=1):
 
 
 # Function that given range, returns a single object with factor a, factor b, the multiplication result and user result with value none
-# { id:1, 'factor_a': 9, 'factor_b': 4, 'result': 36, 'user_result': None}
+# { num_operacion:1, 'factor_a': 9, 'factor_b': 4, 'result': 36, 'user_result': None}
 def get_multiplication_obj( range_from, range_to, id=1):
     range_from = int(range_from)
     range_to = int(range_to)
@@ -83,7 +83,7 @@ def get_multiplication_obj( range_from, range_to, id=1):
     factor_a = random.randint(range_from, range_to)
     factor_b = random.randint(range_from, range_to)
     return ({
-            'id': id,
+            'num_operacion': id,
             'factor_a' : factor_a,
              'factor_b' : factor_b,
              'result' : factor_a * factor_b,

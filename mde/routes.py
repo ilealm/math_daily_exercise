@@ -68,13 +68,20 @@ def game_page():
         print('operations in session', session['game']['exercises'])
         # print('all test ', form.test.data)
 
+    # print('operations in session', session['game']['exercises'])
 
-    user_operations = [{"result": "10"},
-                {"result": "100"},
-                {"result": "1000"}]
-
+    # user_operations = [{"result": "10"},
+    #             {"result": "100"},
+    #             {"result": "1000"}]
+    user_operations = session['game']['exercises']
     form = GameForm(operations=user_operations)
     exercises = session['game']['exercises']
+
+    
+    print('\n\n\nin exercises send to the form: ', exercises[0], '\n\n')
+    print('num_operacion', exercises[0]['num_operacion'])
+    print('factor_a', exercises[0]['factor_a'])
+    print('factor_b', exercises[0]['factor_b'])
 
     return render_template('game.html', form=form, exercises=exercises)
 
