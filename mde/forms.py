@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField, FieldList, FormField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional, NumberRange, InputRequired
 
 from mde.models import User
@@ -7,6 +7,9 @@ from mde.models import User
 
 TABLES_RANGE = [(2,'2'),(3,'3'),(4,'4'),(5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9'),(10,'10') ]
 PLAY_MODES = ['Exercises', 'Minutes']
+
+# THIS CODE EXECUTES TOP TO BOTTOM, so called functions need to be before
+
 
 class RegisterForm(FlaskForm):
     # Flask will execute this functions auto on form.validate_on_submit()
@@ -61,7 +64,12 @@ class PlayForm(FlaskForm):
 
 
 
+class OperationForm(FlaskForm):
+
+    result = IntegerField(label='result', validators=[
+                        DataRequired(message='Please enter your result.'), ])
+
 
 class GameForm(FlaskForm):    
-    test = StringField(label='test',  default=100 )
+    operations = FieldList(FormField(OperationForm), min_entries=1)
     submit = SubmitField(label='Check')

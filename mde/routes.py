@@ -54,17 +54,29 @@ def play_page():
 @app.route('/game', methods=['GET', 'POST'])
 @login_required
 def game_page():
+    # session['game'] is set on play/POST. A game must be configure to enter this route
     if not 'game' in session:
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
         
-    form = GameForm()
-    # TODO: if there is not a game in session, send it back to play
+    # form = GameForm()
 
     if request.method == 'POST':
-        print('\n\n\n in game/post\n\n\n')
+        # [{'factor_a': 8, 'factor_b': 9, 'id': 0, 'result': 72, 'user_result': None}, 
+        # {'factor_a': 5, 'factor_b': 9, 'id': 1, 'result': 45, 'user_result': None}, 
+        # {'factor_a': 10, 'factor_b': 5, 'id': 2, 'result': 50, 'user_result': None}]
+        print('operations in session', session['game']['exercises'])
+        # print('all test ', form.test.data)
 
-    return render_template('game.html', form=form)
+
+    user_operations = [{"result": "10"},
+                {"result": "100"},
+                {"result": "1000"}]
+
+    form = GameForm(operations=user_operations)
+    exercises = session['game']['exercises']
+
+    return render_template('game.html', form=form, exercises=exercises)
 
 
 

@@ -103,7 +103,7 @@ def save_game_in_session(play_form):
     session['game']= game
 
     # print('in save session: test ', session['game']['amount'])
-    print(session['game'])
+    # print(session['game'])
 
 
 
