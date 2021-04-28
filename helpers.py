@@ -104,44 +104,34 @@ def save_game_in_session(play_form):
     session['game'] = game
     session.permanent = False
 
-    # print('in save session: test ', session['game']['amount'])
-    # print(session['game'])
+
 
 
 # Function that receives an array with a copy of session[game][operations] but with user answers.
-# The user answers will be added to the sesssion, and [game][right_answers] will be updated
+# The user answers will be added to the sesssion, and [game][right_answers] will be updated, in a string format.
+# Also, the amount of right answers will be counted and updated to [session][game][right_answers] 
 def update_game_in_session_answers(user_answers):
     # TODO: validate that the session object exists
     if not 'game' in session:
         return
 
-    # update the excercises with the user's answers
     session['game']['exercises'] = user_answers
 
-    # update ['game']['exercises'][user_answer] to string AND
-    # get the number right answers
     right_answers = 0
-    # TODO maybe change the for to the other way
     for op in session['game']['exercises']:
-        # update ['game']['exercises'][user_answer] to string
-        # 'result': '4', 'user_answer': 4
         op['user_answer'] = str(op['user_answer'])
-        # if int(op['user_answer']) == int(op['result']):
         if op['user_answer'] == op['result']:
             right_answers += 1
     
-    # update session['right_answers']
     session['game']['right_answers'] = right_answers
 
  
-
     # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
     # I need to tell it that has been updated
     session.modified = True
 
-    # WORKING: add if the result is right or wrong and dipslay it on the results. try first to display color only instead to change.
 
-    print('\n\n\n in update_game_in_session_answers\n', session['game'], '\n')
+    # print('\n\n\n in update_game_in_session_answers\n', session['game'], '\n')
     
 
 
