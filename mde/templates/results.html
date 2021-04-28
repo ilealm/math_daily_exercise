@@ -22,8 +22,12 @@
           
 
                 <div class="container">
-                    {% for op in session['game']['exercises']  %}                
-                        <div class="row justify-content-md-center align-items-center p-2 card-bg "  >
+                    {% for op in session['game']['exercises']  %}     
+                        {%  if op['user_answer'] == op['result'] %}           
+                            <div class="row justify-content-md-center align-items-center p-2 card-bg "  >
+                        {% else %}
+                            <div class="row justify-content-md-center align-items-center p-2 "  >
+                        {% endif %}
                             <div class="col col-lg-2">
                                 <label for="colFormLabel" class="col-sm col-form-label"> 
                                     {{ op.factor_a }} * {{ op.factor_b }} 

@@ -118,15 +118,22 @@ def update_game_in_session_answers(user_answers):
     # update the excercises with the user's answers
     session['game']['exercises'] = user_answers
 
+    # update ['game']['exercises'][user_answer] to string AND
     # get the number right answers
     right_answers = 0
     # TODO maybe change the for to the other way
     for op in session['game']['exercises']:
-        if int(op['user_answer']) == int(op['result']):
+        # update ['game']['exercises'][user_answer] to string
+        # 'result': '4', 'user_answer': 4
+        op['user_answer'] = str(op['user_answer'])
+        # if int(op['user_answer']) == int(op['result']):
+        if op['user_answer'] == op['result']:
             right_answers += 1
     
     # update session['right_answers']
     session['game']['right_answers'] = right_answers
+
+ 
 
     # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
     # I need to tell it that has been updated
