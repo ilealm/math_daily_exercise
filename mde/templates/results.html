@@ -17,27 +17,36 @@
     </div>
 
     <!-- style="border-style: solid; border-color: red;" -->
-        <div class="container w-50 pt-3 px-4" style="border-style: solid; border-color: white;" >
+    <!-- d-flex align-items-center -->
+        <div class="container w-50 pt-3 px-4" >
             <h1> Results </h1>
           
-
-                <div class="container">                   
-                    {% for op in session['game']['exercises']  %}     
-                        {%  if op['user_answer'] == op['result'] %}           
-                            <div class="row justify-content-md-center align-items-center p-2 bg-success "  >
-                        {% else %}
-                            <div class="row justify-content-md-center align-items-center p-2 bg-warning "  >
-                        {% endif %}
-                            <div class="col col-lg-2">
-                                <label for="colFormLabel" class="col-sm col-form-label"> 
-                                    {{ op.factor_a }} * {{ op.factor_b }} 
-                                 </label>                                    
-                            </div>
-                            <div class="col-md-auto w-25">
-                                {{ op.user_answer }}                                   
-                            </div>
+            <div class="container " >                   
+                {% for op in session['game']['exercises']  %}     
+                <div class="row p-2 border " >
+                    {%  if op['user_answer'] == op['result'] %}     
+                        <div class="col-3   d-flex  justify-content-end"  >                                
+                            <i class="bi bi-check2-circle text-success "></i>                            
                         </div>
-                    {% endfor %} 
+                        <div class="col  ">
+                            <span class="align-middle">
+                                {{ op.factor_a }} * {{ op.factor_b }} =  {{ op.user_answer }}      
+                            </span>                           
+                        </div>
+                    {% else %}
+                        <div class="col-3   d-flex  justify-content-end "  >                                
+                            <i class="bi bi-exclamation-circle text-info"></i>            
+                        </div>
+                        <div class="col  ">
+                            <span class="align-middle">
+                                {{ op.factor_a }} * {{ op.factor_b }} =  {{ op.user_answer }}     
+                                ... the answer is  {{ op.result }}
+                            </span>                           
+                    </div>
+                    {% endif %}
+                        
+                    </div>
+                {% endfor %} 
                 </div>
                 <div class="pt-5 text-center">
                     <label> some btns</label>
