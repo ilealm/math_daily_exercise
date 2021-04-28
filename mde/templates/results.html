@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+ 
+{% block title %}
+    Results Page
+{% endblock %}
+
+{% block content %}
+    <div class="container ">       
+        <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light text-center " >
+            <h1>
+                <label type="text" style="color:red"> Math</label>  
+                <label type="text" style="color:green"> Daily</label>  
+                <label type="text" style="color:purple"> Exercises</label>  
+                <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
+            </h1>
+            <br>                         
+    </div>
+
+    <!-- style="border-style: solid; border-color: red;" -->
+        <div class="container w-50 pt-3 px-4" style="border-style: solid; border-color: white;" >
+            <h1> Results </h1>
+          
+
+                <div class="container">
+                    {% for op in session['game']['exercises']  %}                
+                        <div class="row justify-content-md-center align-items-center p-2 card-bg "  >
+                            <div class="col col-lg-2">
+                                <label for="colFormLabel" class="col-sm col-form-label"> 
+                                    {{ op.factor_a }} * {{ op.factor_b }} 
+                                 </label>                                    
+                            </div>
+                            <div class="col-md-auto w-25">
+                                {{ op.user_answer }}                                   
+                            </div>
+                        </div>
+                    {% endfor %} 
+                </div>
+                <div class="pt-5 text-center">
+                    <label> some btns</label>
+                </div>
+            </form>   
+
+
+  
+        </div>
+
+    </div>
+
+
+{% endblock %}

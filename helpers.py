@@ -102,6 +102,7 @@ def save_game_in_session(play_form):
         'right_answers': None
     }
     session['game'] = game
+    session.permanent = False
 
     # print('in save session: test ', session['game']['amount'])
     # print(session['game'])
@@ -119,16 +120,21 @@ def update_game_in_session_answers(user_answers):
 
     # get the number right answers
     right_answers = 0
+    # TODO maybe change the for to the other way
     for op in session['game']['exercises']:
         if int(op['user_answer']) == int(op['result']):
             right_answers += 1
     
     # update session['right_answers']
     session['game']['right_answers'] = right_answers
-        
-    # print('rigth', right_answers)
 
-    print(session['game'])
+    # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
+    # I need to tell it that has been updated
+    session.modified = True
+
+    # WORKING: add if the result is right or wrong and dipslay it on the results. try first to display color only instead to change.
+
+    print('\n\n\n in update_game_in_session_answers\n', session['game'], '\n')
     
 
 

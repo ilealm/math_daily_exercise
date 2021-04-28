@@ -29,14 +29,6 @@ def play_page():
     if form.validate_on_submit():
         remove_game_in_session()
         save_game_in_session(form)
-        # range_from = form.range_from.data
-        # range_to = form.range_to.data
-        # amount =  form.amount.data
-        # mode = form.mode.data
-        # exercises = get_exercises(range_from, range_to, amount)
-        # session permanent = False #  If set to False (which is the default) the session will be deleted when the user closes the browser.
-
-        # if form.mode.data == 'Exercises':
         return redirect(url_for('game_page'))
 
     # Display errors using flashing
@@ -65,10 +57,14 @@ def game_page():
         user_answers = []
         for field in form.operations:
             user_answers.append(field.data)
-            
+
         # Update the session['game']['user_answer'] with the user's answers
-        # redirect to the results page
+        # TODO close the game
+        # TODO save to DB the game
         update_game_in_session_answers(user_answers)
+        # redirect to the results page
+        return redirect(url_for('results_page'))
+
 
         # print('\n\n\n sesion...')
         # print(session['game'])
@@ -86,6 +82,8 @@ def game_page():
     return render_template('game.html', form=form)
 
 
+
+
 @app.route('/results', methods=['GET', 'POST'])
 @login_required
 def results_page():
@@ -94,7 +92,12 @@ def results_page():
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
-    return render_template('error.html')
+
+    print('\n\n\n in results_page\n', session['game'], '\n')
+    
+    return render_template('results.html')
+
+
 
 
 @app.route('/stats')
