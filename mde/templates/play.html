@@ -25,7 +25,7 @@
                 <div class="col">
                     <div class="p-3 border card-bg">                    
                         <p class="font-weight-bold"> Step 1 </p>
-                        <!-- card component -->
+                        <!-- TABLES card component -->
                         <div class="card">
                             <div class="card-header instructions">
                                 Select tables to practice
@@ -34,23 +34,22 @@
                                 <div  class="row  ">
                                     <div class="col-md-3 " >
                                         <label for="inputNumber" class="form-label">From</label>
-                                        <input type="number" class="form-control" id="from">
+                                        {{ form.range_from(class="form-select") }}    
                                     </div>
                                     <div class="col-md-3  ">
                                         <label for="inputTo" class="form-label">To</label>
-                                        <input type="number" class="form-control" id="to">
+                                        {{ form.range_to(class="form-select") }}    
                                     </div>
                                 </div>
 
                             </div>
                             </div>
                     </div>
-                <!-- Mode  -->                   
                 </div>
                 <div class="col">
                     <div class="p-3 border card-bg">
                         <p class="font-weight-bold"> Step 2 </p>
-                        <!-- card component -->
+                        <!-- MODE card component -->
                         <div class="card">
                             <div class="card-header instructions">
                                 Select mode to practice
@@ -59,22 +58,17 @@
                                 <div class="form-check">
                                     <div  class="row pb-3 ">
                                         <div class="col-md-3 " >
-                                            <input type="number" class="form-control" id="amount">
+                                            {{ form.amount(class="form-control") }}    
                                         </div>
-        
                                         <div class="col-md ">                                                 
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    Exercises
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                                <label class="form-check-label" for="exampleRadios2">
-                                                    Minutes
-                                                </label>
-                                            </div>
+                                                <!-- {{ form.mode(class="form-check") }}     -->
+                                                {% for subfield in form.mode %}
+                                                <tr>
+                                                    <td>{{ subfield }} </td>
+                                                    <td>{{ subfield.label }}</td>
+                                                    <br>
+                                                </tr>
+                                                {% endfor %}
                                         </div>
                                     </div>
 
@@ -86,8 +80,7 @@
             </div>
             <!-- play btn -->
             <div class="pt-5 text-center">
-                <a class="btn btn-lg btn-outline-danger "  aria-current="page" href="{{ url_for('login_page') }}">Play!</a>
-             
+                {{ form.submit(class="btn btn-lg btn-outline-danger ") }}
             </div>
         </form>
     </div>

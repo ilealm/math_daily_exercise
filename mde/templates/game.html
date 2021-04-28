@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+ 
+{% block title %}
+    Game Page
+{% endblock %}
+
+{% block content %}
+    <div class="container ">       
+        <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light text-center " >
+            <h1>
+                <label type="text" style="color:red"> Math</label>  
+                <label type="text" style="color:green"> Daily</label>  
+                <label type="text" style="color:purple"> Exercises</label>  
+                <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
+            </h1>
+            <br>                         
+    </div>
+        <div class="container w-50 pt-3 px-4" style="border-style: solid; border-color: white;" >
+            <form method='POST' action='/game' class="form-register " >    
+                {{ form.hidden_tag() }}
+
+                <div class="container">
+                    {% for op in form.operations  %}
+                    {{ op.hidden_tag() }}
+                        <div class="row justify-content-md-center align-items-center p-2 card-bg " style="border-style: solid; border-color: white;" >
+                            <div class="col col-lg-2">
+                              {{ op.factor_a.data }} * {{ op.factor_b.data }} 
+                                    
+                            </div>
+                            <div class="col-md-auto w-25">
+                                {{ op.result(class="form-control") }}    
+                               
+                            </div>
+                        </div>
+                    {% endfor %} 
+                </div>
+                <div class="pt-5 text-center">
+                    {{ form.submit(class="btn btn-lg btn-outline-danger ") }}
+                </div>
+            </form>   
+
+
+  
+        </div>
+
+    </div>
+
+
+{% endblock %}

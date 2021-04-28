@@ -50,13 +50,20 @@ TODO: create mgnt on route login_page : done
 # play branch
 
 TODO: create play.html: select tables to practice, number of games
+TODO: redisign register and login layout: done
+
+
+# play_backend branch
+TODO: Fix range to to 10: done
+TODO: Add message "needs to be an integer" to amount
+
+TODO: in select to, select 10 as default: done
+TODO: validation on from less than to: done
+TODO: set cursor on 1st input: done
 TODO: play logic
 TODO: show results
 TODO: save game
 TODO: reestart game
 TODO: 
 
-
-
-TODO: redisign register and login layout
 TODO: auto-fase flash windows
