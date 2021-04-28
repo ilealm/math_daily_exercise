@@ -20,15 +20,17 @@
                 {{ form.hidden_tag() }}
 
                 <div class="container">
-                    {% for op in form.operations  %}
-                    {{ op.hidden_tag() }}
+                    {% for op in form.operations  %}                
                         <div class="row justify-content-md-center align-items-center p-2 card-bg " style="border-style: solid; border-color: white;" >
                             <div class="col col-lg-2">
-                              {{ op.factor_a.data }} * {{ op.factor_b.data }} 
-                                    
+                                <label for="colFormLabel" class="col-sm col-form-label"> 
+                                    {{ op.num_operacion }}    
+                                    {{ op.factor_a.data }} * {{ op.factor_b.data }} 
+                                 </label>                                    
                             </div>
                             <div class="col-md-auto w-25">
                                 {{ op.result(class="form-control") }}    
+                                {{ op.user_result(class="form-control") }}    
                                
                             </div>
                         </div>
