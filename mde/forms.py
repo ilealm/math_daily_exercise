@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField, FieldList, FormField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, RadioField, FieldList, FormField, HiddenField, Form
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Optional, NumberRange, InputRequired
 
 from mde.models import User
@@ -64,16 +64,20 @@ class PlayForm(FlaskForm):
 
 
 
-class OperationForm(FlaskForm):
-    # HiddenField
+# This needs to be Form, not FlaskForm. 
+class OperationForm(Form):
     num_operacion = HiddenField(label='num_operacion')
     factor_a = StringField()
     factor_b = StringField(label='factor_b')
-    result = StringField(label='factor_b')    
+    result = HiddenField(label='factor_b')    
     user_result = IntegerField(label='result', validators=[
                         DataRequired(message='Please enter your result.'), ])
 
 
+# Note: You want your main form to be a FlaskForm while the form you will use for the FieldList will be a 
+# regular Form from WTForms. The reason for this is that the FlaskForm adds a CSRF token to the form, which 
+# is unnecessary for the forms that will be nested in the main form.
+# https://prettyprinted.com/tutorials/how-to-use-fieldlist-in-flask-wtf
 class GameForm(FlaskForm):    
     operations = FieldList(FormField(OperationForm), min_entries=1)
     submit = SubmitField(label='Check')

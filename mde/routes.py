@@ -58,32 +58,27 @@ def game_page():
     if not 'game' in session:
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
-        
-    # form = GameForm()
 
-    if request.method == 'POST':
-        # [{'factor_a': 8, 'factor_b': 9, 'id': 0, 'result': 72, 'user_result': None}, 
-        # {'factor_a': 5, 'factor_b': 9, 'id': 1, 'result': 45, 'user_result': None}, 
-        # {'factor_a': 10, 'factor_b': 5, 'id': 2, 'result': 50, 'user_result': None}]
-        print('operations in session', session['game']['exercises'])
-        # print('all test ', form.test.data)
-
-    # print('operations in session', session['game']['exercises'])
-
-    # user_operations = [{"result": "10"},
-    #             {"result": "100"},
-    #             {"result": "1000"}]
     user_operations = session['game']['exercises']
+    # because I know how many operations I need to display, I need to pass the operations as argument . form = GameForm() will only put 1 empty row 
     form = GameForm(operations=user_operations)
-    exercises = session['game']['exercises']
-
     
-    print('\n\n\nin exercises send to the form: ', exercises[0], '\n\n')
-    print('num_operacion', exercises[0]['num_operacion'])
-    print('factor_a', exercises[0]['factor_a'])
-    print('factor_b', exercises[0]['factor_b'])
+    # TODO: validate integer input
+    if form.validate_on_submit():
+        for field in form.operations:
+            print(field.data)
+        
+        # for value in form.operations.data:
+        #     print(value)
 
-    return render_template('game.html', form=form, exercises=exercises)
+    # Display errors using flashing
+    if form.errors != {}:
+        for err_msg in form.errors.values():
+            flash(
+                f'There were errors while checking the game: {err_msg}', category='danger')
+
+   
+    return render_template('game.html', form=form)
 
 
 
