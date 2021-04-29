@@ -58,6 +58,15 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
     
 
+    def add_new_user(self,new_user):
+        db.session.add(new_user)
+        db.session.commit()          
+
+
+    def get_user_by_username(username_to_check):
+        return User.query.filter_by(username=username_to_check).first()
+
+
     def update_stats(self, num_right_answers):
         self. games_played += 1
         self.right_answers += num_right_answers
@@ -65,7 +74,8 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
     
-    
+
+
 
 class Game(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -82,3 +92,9 @@ class Game(db.Model, UserMixin):
 
     def __repr__(self):
         return '<Game %r>' % self.id
+
+    def add_new_game(new_game):
+        db.session.add(new_game)
+        db.session.commit()
+
+
