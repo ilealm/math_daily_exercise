@@ -26,6 +26,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(length=60), nullable=False)
     parent_email_address = db.Column(db.String(length=50), nullable=True, default=None)
     games_played = db.Column(db.Integer, nullable=True, default=0)
+    right_answers = db.Column(db.Integer, nullable=True, default=0)
     last_played = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
     # BC user can have n games, I can create a relationship 1:n
     # backref is a simple way to also declare a new property on the Game class. 
@@ -57,9 +58,10 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
     
 
-    def increase_game(self):
+    def increase_game(self, right_answers):
         self. games_played += 1
-        # self.last_played = datetime.utcnow
+        self.right_answers += right_answers
+        self.last_played = datetime.utcnow()
         db.session.commit()
 
     

@@ -116,9 +116,9 @@ def process_game(user_answers):
     update_game_in_session_answers(user_answers)
    
     save_game_in_db()
-    update_user_stats()
+    update_user_stats(session['game']['right_answers'])
     
-    # reload the user in session, BC the info is updated
+    # reload the user in session, BC the info is updated. check if I need to do this, or the obj is already updated
 
 
 def save_game_in_db():
@@ -145,7 +145,7 @@ def save_game_in_db():
 def update_user_stats():
     try:        
         current_user.increase_game()
-            
+
     except AssertionError as error:
         app.logger.error(
             'An error occurred while updating the usert game stats into the database: ', error)
