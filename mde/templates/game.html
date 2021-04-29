@@ -15,27 +15,31 @@
             </h1>
             <br>                         
     </div>
-        <div class="container w-50 pt-3 px-4" style="border-style: solid; border-color: white;" >
+        <div class="container w-50 pt-3 px-4" s >
             <form method='POST' action='/game' class="form-register " >    
                 {{ form.hidden_tag() }}
 
                 <div class="container">
                     {% for op in form.operations  %}                
-                        <div class="row justify-content-md-center align-items-center p-2 card-bg " style="border-style: solid; border-color: white;" >
-                            <div class="col col-lg-2">
+                        <div class="row justify-content-md-center align-items-center p-2 bg-light " style="border-style: solid; border-color: whitesmoke;" >
+                            <div class="col col-md-3"   >
                                 <label for="colFormLabel" class="col-sm col-form-label"> 
                                     {{ op.num_operacion }}    
-                                    {{ op.factor_a.data }} * {{ op.factor_b.data }} 
+                                        <label class="text fs-5" style="color:#219ebc"> {{ op.factor_a.data }}  </label>  
+                                        <i class="bi bi-asterisk symbol "></i>
+                                        <label class="text fs-5" style="color:#219ebc"> {{ op.factor_b.data }}  </label>  
+                                        <i class="bi bi-chevron-double-right symbol"></i>    
                                  </label>                                    
                             </div>
-                            <div class="col-md-auto w-25">
+                            <div class="col-md-auto w-25"  >
                                 {{ op.result(class="form-control") }}    
                                 {{ op.user_answer(class="form-control") }}                                   
                             </div>
                         </div>
                     {% endfor %} 
                 </div>
-                <div class="pt-5 text-center">
+                
+                <div class="p-5 text-center">
                     {{ form.submit(class="btn btn-lg btn-outline-danger ") }}
                 </div>
             </form>   

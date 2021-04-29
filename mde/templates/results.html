@@ -41,11 +41,12 @@
                         </div>
                         <div class="col  ">
                             <span class="align-middle">
-                                {{ op.factor_a }} 
+                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_a }}   </label>                                  
                                 <i class="bi bi-asterisk symbol "></i>
-                                {{ op.factor_b }} 
+                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_b }}   </label>  
                                 <i class="bi bi-chevron-double-right symbol"></i>                                    
-                                {{ op.user_answer }}      
+                                <label class="text fs-5" style="color:#ff6b6b"> {{ op.user_answer }}  </label>  
+                                      
                             </span>                           
                         </div>
                 {% else %}
@@ -58,19 +59,19 @@
                         </div>
                         <div class="col  ">
                             <span class="align-middle">
-                                {{ op.factor_a }}   
+                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_a }}   </label>  
                                 <i class="bi bi-asterisk symbol "></i>
-                                {{ op.factor_b }} 
+                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_b }}   </label>  
+                                
                                 <i class="bi bi-chevron-double-right symbol"></i>
                                 {{ op.user_answer }}     
-                                <label class="font-italic">
+                                <label class="text fs-5 fst-italic" style="color:#ea7317">
                                     &nbsp; ... answer is 
+                                    <i class="bi bi-arrow-right-circle-fill symbol text-danger"></i>
                                 </label>
-                                <i class="bi bi-arrow-right-circle-fill symbol text-danger"></i>
-
-                                <label class="text-primary">
-                                    {{ op.result }}
-                                </label>
+                                
+                                <label class="text fs-5 fw-bold" style="color:#20bf55"> {{ op.result }}   </label>  
+                                
                             </span>                           
                     </div>
                 {% endif %}
