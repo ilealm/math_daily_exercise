@@ -58,9 +58,9 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
     
 
-    def increase_game(self, right_answers):
+    def update_stats(self, num_right_answers):
         self. games_played += 1
-        self.right_answers += right_answers
+        self.right_answers += num_right_answers
         self.last_played = datetime.utcnow()
         db.session.commit()
 

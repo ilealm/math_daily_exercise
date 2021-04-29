@@ -113,8 +113,7 @@ def process_game(user_answers):
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
-    update_game_in_session_answers(user_answers)
-   
+    update_game_in_session_answers(user_answers)   
     save_game_in_db()
     update_user_stats(session['game']['right_answers'])
     
@@ -142,9 +141,9 @@ def save_game_in_db():
 
 
 # function that update user's stats with the last game played 
-def update_user_stats():
+def update_user_stats(num_right_answers):
     try:        
-        current_user.increase_game()
+        current_user.update_stats(num_right_answers)
 
     except AssertionError as error:
         app.logger.error(
