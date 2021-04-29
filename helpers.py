@@ -1,8 +1,8 @@
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from flask import session
 import random
 
-from mde.models import User
+from mde.models import User, Game
 from mde import app, db
 
 
@@ -91,6 +91,7 @@ def get_multiplication_obj(range_from, range_to, id=1):
             })
 
 
+
 # Function that receives a playform and save the play configuration into the session
 def save_game_in_session(play_form):
     game = {
@@ -106,16 +107,55 @@ def save_game_in_session(play_form):
     session.permanent = False
 
 
+# Function that receives the user's answers, manage the session update and saves the game into DB
+def process_game(user_answers):    
+    if not session_game_exits:
+        flash(f'Please configure your game to start playing. ', category='danger')
+        return redirect(url_for('play_page'))
 
+    update_game_in_session_answers(user_answers)   
+    save_game_in_db()
+    update_user_stats(session['game']['right_answers'])
+    
+    # reload the user in session, BC the info is updated. check if I need to do this, or the obj is already updated
+
+
+def save_game_in_db():
+    try:
+        current_game = session['game']
+        game = Game(
+            range_from = current_game['range_from'],
+            range_to = current_game['range_to'],
+            amount = current_game['amount'],
+            mode = current_game['mode'],
+            right_answers = current_game['right_answers'],
+            assertiveness = current_game['assertiveness'],
+            user_id = current_user.id
+            )
+        db.session.add(game)
+        db.session.commit()            
+     
+    except AssertionError as error:
+        app.logger.error(
+            'An error occurred while adding the game into the database: ', error)
+
+
+# function that update user's stats with the last game played 
+def update_user_stats(num_right_answers):
+    try:        
+        current_user.update_stats(num_right_answers)
+
+    except AssertionError as error:
+        app.logger.error(
+            'An error occurred while updating the usert game stats into the database: ', error)
+    
+
+    
 
 # Function that receives an array with a copy of session[game][operations] but with user answers.
 # The user answers will be added to the sesssion, and [game][right_answers] will be updated, in a string format.
 # Also, the amount of right answers will be counted and updated to [session][game][right_answers] 
 def update_game_in_session_answers(user_answers):
-    # TODO: validate that the session object exists
-    if not 'game' in session:
-        return
-
     session['game']['exercises'] = user_answers
 
     right_answers = 0
@@ -127,11 +167,18 @@ def update_game_in_session_answers(user_answers):
     session['game']['right_answers'] = right_answers
     session['game']['assertiveness'] =  round(((right_answers / session['game']['amount']) * 100),2)
 
-     # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
+    # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
     # I need to tell it that has been updated
     session.modified = True
 
 
+
+
+# Function that returns true/false if the object session['game'] exists
+def session_game_exits():
+    if not 'game' in session:
+        return False    
+    return True
  
     
 def remove_game_in_session():
