@@ -5,81 +5,81 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container ">       
-        <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light text-center " >
-            <h1>
-                <label type="text" style="color:red"> Math</label>  
-                <label type="text" style="color:green"> Daily</label>  
-                <label type="text" style="color:purple"> Exercises</label>  
-                <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
-            </h1>
-            <br>                         
+
+    <!-- Result message -->
+    <div class="position-relative overflow-hidden  p-3 mt-2 text-center  text-success " >
+        <h5>
+            You did 
+            <label style="color:purple">
+                {{ session['game']['amount'] }} 
+            </label>     
+            exercises 
+            and you got it right 
+            <label style="color:blue">
+                {{ session['game']['right_answers'] }},
+            </label>
+            which is  
+            <label style="color:purple">
+                {{ session['game']['assertiveness'] }}
+            </label>
+            % assertiveness
+        </h5>
     </div>
 
-    <!-- style="border-style: solid; border-color: red;" -->
-    <!-- d-flex align-items-center -->
-    <h1> Results </h1>
-        <div class="container w-50 pt-3 px-4" >
-          
-            <div class="container " >                   
-                {% for op in session['game']['exercises']  %}     
-                    <!-- <div class="row p-2 border " > -->
-                    {%  if op['user_answer'] == op['result'] %}     
-                        <div class="row p-2 border right-bg " >
-                            <div class="col-3   d-flex  justify-content-end"  >            
-                                <h5>
-                                    <!-- <i class="bi bi-check2-circle text-success "></i>      -->
-                                    <i class="bi bi-emoji-laughing text-success "></i>
-                                </h5>            
-                            </div>
-                            <div class="col  ">
-                                <span class="align-middle">
-                                    {{ op.factor_a }} 
-                                    <i class="bi bi-asterisk symbol "></i>
-                                    {{ op.factor_b }} 
-                                    <i class="bi bi-chevron-double-right symbol"></i>                                    
-                                    {{ op.user_answer }}      
-                                </span>                           
-                            </div>
-                    {% else %}
-                        <div class="row p-2 border wrong-bg" >
-                            <div class="col-3   d-flex  justify-content-end "  >         
-                                <h5>
-                                    <!-- <i class="bi bi-exclamation-circle text-danger"></i>             -->
-                                    <i class="bi bi-emoji-smile-upside-down  text-danger"></i>
-                                </h5>                       
-                            </div>
-                            <div class="col  ">
-                                <span class="align-middle">
-                                    {{ op.factor_a }}   
-                                    <i class="bi bi-asterisk symbol "></i>
-                                    {{ op.factor_b }} 
-                                    <i class="bi bi-chevron-double-right symbol"></i>
-                                    {{ op.user_answer }}     
-                                    <label class="font-italic">
-                                        &nbsp; ... answer is 
-                                    </label>
-                                    <i class="bi bi-arrow-right-circle-fill symbol text-danger"></i>
-
-                                    <label class="text-primary">
-                                        {{ op.result }}
-                                    </label>
-                                </span>                           
+    <!-- Show results -->
+    <div class="container w-50 pt-3 px-4" >            
+        <div class="container " >          
+            {% for op in session['game']['exercises']  %}     
+                <!-- <div class="row p-2 border " > -->
+                {%  if op['user_answer'] == op['result'] %}     
+                    <div class="row p-2 border right-bg " >
+                        <div class="col-3   d-flex  justify-content-end"  >            
+                            <h5>
+                                <!-- <i class="bi bi-check2-circle text-success "></i>      -->
+                                <i class="bi bi-emoji-laughing text-success "></i>
+                            </h5>            
                         </div>
-                    {% endif %}
-                        
-                      </div>
-                {% endfor %} 
-                <div class="pt-5 text-center">
-                    <label> some btns</label>
-                </div>
-            </form>   
+                        <div class="col  ">
+                            <span class="align-middle">
+                                {{ op.factor_a }} 
+                                <i class="bi bi-asterisk symbol "></i>
+                                {{ op.factor_b }} 
+                                <i class="bi bi-chevron-double-right symbol"></i>                                    
+                                {{ op.user_answer }}      
+                            </span>                           
+                        </div>
+                {% else %}
+                    <div class="row p-2 border wrong-bg" >
+                        <div class="col-3   d-flex  justify-content-end "  >         
+                            <h5>
+                                <!-- <i class="bi bi-exclamation-circle text-danger"></i>             -->
+                                <i class="bi bi-emoji-smile-upside-down  text-danger"></i>
+                            </h5>                       
+                        </div>
+                        <div class="col  ">
+                            <span class="align-middle">
+                                {{ op.factor_a }}   
+                                <i class="bi bi-asterisk symbol "></i>
+                                {{ op.factor_b }} 
+                                <i class="bi bi-chevron-double-right symbol"></i>
+                                {{ op.user_answer }}     
+                                <label class="font-italic">
+                                    &nbsp; ... answer is 
+                                </label>
+                                <i class="bi bi-arrow-right-circle-fill symbol text-danger"></i>
 
-
-  
-        </div>
-
+                                <label class="text-primary">
+                                    {{ op.result }}
+                                </label>
+                            </span>                           
+                    </div>
+                {% endif %}
+                    
+                    </div>
+            {% endfor %} 
+            <div class="pt-5  d-flex justify-content-center " >
+                <a class="nav-link btn btn-lg btn-outline-danger " " href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
+            </div>
     </div>
-
 
 {% endblock %}

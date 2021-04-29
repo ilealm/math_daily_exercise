@@ -99,7 +99,8 @@ def save_game_in_session(play_form):
         'amount': play_form.amount.data,
         'mode': play_form.mode.data,
         'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, play_form.amount.data),
-        'right_answers': None
+        'right_answers': None,
+        'assertiveness': None
     }
     session['game'] = game
     session.permanent = False
@@ -124,21 +125,15 @@ def update_game_in_session_answers(user_answers):
             right_answers += 1
     
     session['game']['right_answers'] = right_answers
+    session['game']['assertiveness'] =  round(((right_answers / session['game']['amount']) * 100),2)
 
- 
-    # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
+     # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
     # I need to tell it that has been updated
     session.modified = True
 
 
-    # print('\n\n\n in update_game_in_session_answers\n', session['game'], '\n')
+ 
     
-
-
-
-
-
-
 def remove_game_in_session():
     session.pop('game', None)
 
