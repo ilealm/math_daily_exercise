@@ -11,6 +11,9 @@ pip install flask_bcrypt
 To log user in session
 pip install flask_login
 
+Bootstrap icons
+npm i bootstrap-icons
+
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mde.db'
 
