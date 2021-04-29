@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-md-auto w-25"  >
                                 {{ op.result(class="form-control") }}    
-                                {{ op.user_answer(class="form-control") }}                                   
+                                {{ op.user_answer(class="form-control") }}                                                                   
                             </div>
                         </div>
                     {% endfor %} 
@@ -50,5 +50,9 @@
 
     </div>
 
+    <script>
+        // Set the focus to the 1st exersice
+        document.getElementById("operations-0-user_answer").focus();
+    </script>
 
 {% endblock %}
