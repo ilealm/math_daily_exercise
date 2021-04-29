@@ -9,7 +9,7 @@ from mde.forms import RegisterForm, LoginForm, PlayForm, GameForm
 from wtforms.validators import ValidationError
 
 # user management
-from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
+from helpers import get_user_to_create, add_user, log_in_user, log_out_user, get_user, is_user_password
 # session management
 from helpers import save_game_in_session, remove_game_in_session, session_game_exits
 # game management
@@ -29,6 +29,7 @@ def play_page():
     form = PlayForm()
 
     if form.validate_on_submit():
+        # clean if I have a past game
         remove_game_in_session()
         save_game_in_session(form)
         return redirect(url_for('game_page'))
@@ -47,10 +48,9 @@ def play_page():
 @app.route('/game', methods=['GET', 'POST'])
 @login_required
 def game_page():
-    if not 'game' in session:    
+    if not 'game' in session:
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
-
 
     user_operations = session['game']['exercises']
     # because I know how many operations I need to display, I need to pass the operations as argument . form = GameForm() will only put 1 empty row
@@ -61,12 +61,10 @@ def game_page():
         user_answers = []
         for field in form.operations:
             user_answers.append(field.data)
-        
+
         process_game(user_answers)
 
         return redirect(url_for('results_page'))
-
-
 
     # Display errors using flashing
     if form.errors != {}:
@@ -77,20 +75,16 @@ def game_page():
     return render_template('game.html', form=form)
 
 
-
-
 @app.route('/results', methods=['GET', 'POST'])
 @login_required
 def results_page():
     # session['game'] is set on play/POST. A game must be configure to enter this route
     if not 'game' in session:
-    # if not session_game_exits:
+        # if not session_game_exits:
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
     return render_template('results.html')
-
-
 
 
 @app.route('/stats')
@@ -104,12 +98,12 @@ def login_page():
     form = LoginForm()
 
     if form.validate_on_submit():
-        attempted_user = getUser(form.username.data)
+        attempted_user = get_user(form.username.data)
         if attempted_user:
-            if isUserPassword(attempted_user, form.password.data):
+            if is_user_password(attempted_user, form.password.data):
                 flash(
                     f'Success! You are logged in as: {attempted_user.username}', category='success')
-                logInUser(attempted_user)
+                log_in_user(attempted_user)
                 return redirect(url_for('home_page'))
             else:
                 flash('Invalid password! Please try again', category='danger')
@@ -119,15 +113,14 @@ def login_page():
     return render_template('login.html', form=form)
 
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
     form = RegisterForm()
 
     if request.method == 'POST' and form.validate_on_submit():
-        new_user = getUserToCreate(form)
-        addUser(new_user)
-        logInUser(new_user)
+        new_user = get_user_to_create(form)
+        add_user(new_user)
+        log_in_user(new_user)
 
         flash(
             f"Account created successfully! You are now logged in as {new_user.username}.", category='success')
@@ -144,7 +137,7 @@ def register_page():
 
 @app.route('/logout')
 def logout_page():
-    logOutUser()
+    log_out_user()
     remove_game_in_session()
 
     flash("You have been logged out!", category='info')
