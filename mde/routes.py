@@ -11,7 +11,7 @@ from wtforms.validators import ValidationError
 # user management
 from helpers import getUserToCreate, addUser, logInUser, logOutUser, getUser, isUserPassword
 # session management
-from helpers import save_game_in_session, remove_game_in_session
+from helpers import save_game_in_session, remove_game_in_session, update_game_in_session_answers
 from helpers import range_table_values
 
 
@@ -29,16 +29,7 @@ def play_page():
     if form.validate_on_submit():
         remove_game_in_session()
         save_game_in_session(form)
-        # range_from = form.range_from.data
-        # range_to = form.range_to.data
-        # amount =  form.amount.data
-        # mode = form.mode.data
-        # exercises = get_exercises(range_from, range_to, amount) 
-        # session permanent = False #  If set to False (which is the default) the session will be deleted when the user closes the browser.
-
-        # if form.mode.data == 'Exercises':            
         return redirect(url_for('game_page'))
-            
 
     # Display errors using flashing
     if form.errors != {}:
@@ -47,8 +38,6 @@ def play_page():
                 f'There were errors while creating the game: {err_msg}', category='danger')
 
     return render_template('play.html', form=form, range_table_values=range_table_values)
-
-
 
 
 @app.route('/game', methods=['GET', 'POST'])
@@ -60,25 +49,54 @@ def game_page():
         return redirect(url_for('play_page'))
 
     user_operations = session['game']['exercises']
-    # because I know how many operations I need to display, I need to pass the operations as argument . form = GameForm() will only put 1 empty row 
+    # because I know how many operations I need to display, I need to pass the operations as argument . form = GameForm() will only put 1 empty row
     form = GameForm(operations=user_operations)
-    
-    # TODO: validate integer input
+
     if form.validate_on_submit():
+        # I'm going to get all the user answers into an array
+        user_answers = []
         for field in form.operations:
-            print(field.data)
-        
+            user_answers.append(field.data)
+
+        # Update the session['game']['user_answer'] with the user's answers
+        # TODO close the game
+        # TODO save to DB the game
+        update_game_in_session_answers(user_answers)
+        # redirect to the results page
+        return redirect(url_for('results_page'))
+
+
+        # print('\n\n\n sesion...')
+        # print(session['game'])
+
         # for value in form.operations.data:
         #     print(value)
 
+    # TODO: validate integer input
     # Display errors using flashing
     if form.errors != {}:
         for err_msg in form.errors.values():
             flash(
                 f'There were errors while checking the game: {err_msg}', category='danger')
 
-   
     return render_template('game.html', form=form)
+
+
+
+
+@app.route('/results', methods=['GET', 'POST'])
+@login_required
+def results_page():
+    # session['game'] is set on play/POST. A game must be configure to enter this route
+    if not 'game' in session:
+        flash(f'Please configure your game to start playing. ', category='danger')
+        return redirect(url_for('play_page'))
+
+
+    print('\n\n\n in results_page\n', session['game'], '\n')
+    
+    return render_template('results.html')
+
 
 
 
@@ -106,7 +124,6 @@ def login_page():
             flash('Invalid user name! Please try again', category='danger')
 
     return render_template('login.html', form=form)
-
 
 
 @app.route('/register', methods=['GET', 'POST'])
