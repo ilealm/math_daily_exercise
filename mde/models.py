@@ -58,8 +58,9 @@ class User(db.Model, UserMixin):
     
 
     def increase_game(self):
-        games_played += 1
-        last_played = ddatetime.utcnow
+        self. games_played += 1
+        # self.last_played = datetime.utcnow
+        db.session.commit()
 
     
     

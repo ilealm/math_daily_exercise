@@ -109,7 +109,6 @@ def save_game_in_session(play_form):
 
 # Function that receives the user's answers, manage the session update and saves the game into DB
 def process_game(user_answers):    
-    # TODO raise error if not exits
     if not session_game_exits:
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
@@ -117,7 +116,7 @@ def process_game(user_answers):
     update_game_in_session_answers(user_answers)
    
     save_game_in_db()
-    # update_user_stats()
+    update_user_stats()
     
     # reload the user in session, BC the info is updated
 
@@ -135,21 +134,24 @@ def save_game_in_db():
             user_id = current_user.id
             )
         db.session.add(game)
-        db.session.commit()
-            
-        print('\n\n\n game saved \n\n')
+        db.session.commit()            
+     
     except AssertionError as error:
         app.logger.error(
             'An error occurred while adding the game into the database: ', error)
-    print('\n\n\n game to be added: ', game)
-    # print('\n\n\nuser in session', current_user)
+
 
 # function that update user's stats with the last game played 
 def update_user_stats():
-    # update user stats
-# games_played = db.Column(db.Integer(), nullable=True, default=0)
-#     last_played = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
-    pass
+    try:        
+        current_user.increase_game()
+            
+    except AssertionError as error:
+        app.logger.error(
+            'An error occurred while updating the usert game stats into the database: ', error)
+    
+
+    
 
 # Function that receives an array with a copy of session[game][operations] but with user answers.
 # The user answers will be added to the sesssion, and [game][right_answers] will be updated, in a string format.
