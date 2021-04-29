@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+ 
+{% block title %}
+    Stats Page
+{% endblock %}
+
+{% block content %}
+
+    <!-- Result message -->
+    <div class="position-relative overflow-hidden fs-4 p-3 mt-2 text-center  text-success " >
+        <p>
+            {{ current_user.username }}            
+            , so far, you have played 
+            <label class="text fs-5 fw-bolder" style="color:purple"> {{ current_user.games_played }}  </label>             
+            games
+        </p>
+        <p>
+            with 
+            <label class="text fs-5 fw-bolder" style="color:#ff6b6b"> {{ current_user.right_answers }}  </label> 
+            right answers
+            <em>!</em>
+        </p>       
+    </div>
+    <div class="container " > 
+        <div class="pt-5   justify-content-center " >
+        <h4>
+            Your las game was on
+            {{ current_user.get_last_played_date() }}            
+        </h4>
+        Do want to improve your skills?
+
+        <a class="nav-link btn btn-lg btn-outline-danger " " href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
+    </div>    
+    </div>
+
+
+    <!-- Show results -->
+    <div class="container w-50 pt-3 px-4" >            
+        <div class="container " >          
+            something
+            <div class="pt-5  d-flex justify-content-center " >
+                <a class="nav-link btn btn-lg btn-outline-danger " " href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
+                btn
+            </div>
+    </div>
+
+{% endblock %}

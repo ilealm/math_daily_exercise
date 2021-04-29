@@ -90,7 +90,7 @@ def results_page():
 @app.route('/stats')
 @login_required
 def stats_page():
-    return render_template('error.html')
+    return render_template('stats.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -73,6 +73,11 @@ class User(db.Model, UserMixin):
         self.right_answers += num_right_answers
         self.last_played = datetime.utcnow()
         db.session.commit()
+    
+    # Function that returns the day and date of the last game, without hours.
+    def get_last_played_date(self):        
+        # self.last_played.date() returns only the date
+        return self.last_played.strftime('%a %Y-%m-%d')
 
 
 class Game(db.Model, UserMixin):
