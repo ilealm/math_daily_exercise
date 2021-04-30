@@ -6,11 +6,15 @@
 
 {% block content %}
 
-    <!-- Result message -->
+    <!-- Stats message -->
     <div class="position-relative overflow-hidden fs-4 p-3 mt-2 text-center  text-success " >
         <p>
-            {{ current_user.username }}            
-            , so far, you have played 
+            {{ current_user.username }} ,
+            your las game was on             
+            <label class="text fs-5 fw-bolder" style="color:#014f86"> {{ current_user.get_last_played_date() }}  </label>,             
+        </p>
+        <p>
+            so far, you have played 
             <label class="text fs-5 fw-bolder" style="color:purple"> {{ current_user.games_played }}  </label>             
             games
         </p>
@@ -18,30 +22,23 @@
             with 
             <label class="text fs-5 fw-bolder" style="color:#ff6b6b"> {{ current_user.right_answers }}  </label> 
             right answers
-            <em>!</em>
+            <em class="text-warning">!</em>
         </p>       
     </div>
-    <div class="container " > 
-        <div class="pt-5   justify-content-center " >
-        <h4>
-            Your las game was on
-            {{ current_user.get_last_played_date() }}            
-        </h4>
-        Do want to improve your skills?
 
-        <a class="nav-link btn btn-lg btn-outline-danger " " href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
-    </div>    
+    <!-- Play Again Btn -->
+    <div class="container d-flex flex-column p-1 border" >          
+        <div class="  d-flex justify-content-center ">
+            <p class="   border">
+                Do want to improve your skills?
+            </p>    
+        </div>  
+        <div class="pt-1 d-flex justify-content-center " >            
+            <a class=" btn btn-lg btn-outline-danger "  href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
+        </div>
     </div>
 
 
-    <!-- Show results -->
-    <div class="container w-50 pt-3 px-4" >            
-        <div class="container " >          
-            something
-            <div class="pt-5  d-flex justify-content-center " >
-                <a class="nav-link btn btn-lg btn-outline-danger " " href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
-                btn
-            </div>
-    </div>
 
+    
 {% endblock %}
