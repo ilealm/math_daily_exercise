@@ -11,7 +11,7 @@
         <p>
             {{ current_user.username }} ,
             your las game was on             
-            <label class="text fs-5 fw-bolder" style="color:#014f86"> {{ current_user.get_last_played_date() }}  </label>,             
+            <label class="text fs-5 fw-bolder navy-blue " > {{ current_user.get_last_played_date() }}  </label>,             
         </p>
         <p>
             so far, you have played 
@@ -20,7 +20,7 @@
         </p>
         <p>
             with 
-            <label class="text fs-5 fw-bolder" style="color:#ff6b6b"> {{ current_user.right_answers }}  </label> 
+            <label class="text fs-5 fw-bolder salmon" > {{ current_user.right_answers }}  </label> 
             right answers
             <em class="text-warning">!</em>
         </p>       
@@ -29,7 +29,7 @@
     <!-- Play Again Btn -->
     <div class="container d-flex flex-column p-1 " >          
         <div class="  d-flex justify-content-center ">
-            <p class="  text fs-6  " style="color:#f35b04">
+            <p class="  text fs-6 light-salmon ">
                 Do want to improve your skills?
             </p>    
         </div>  
@@ -38,6 +38,48 @@
         </div>
     </div>
 
+
+    <!-- Tbl with the results -->
+    <div class="container pt-5  pb-5">
+        <table class="table table-striped  table-sm   text-center  " >
+            <thead class=" navy-blue ">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Table From</th>
+                    <th scope="col">Table To</th>
+                    <th scope="col">Num. Exercises</th>
+                    <th scope="col">Right Anwers</th>
+                    <th scope="col">Assertiveness</th>
+                </tr>
+            </thead>
+            <tbody  >
+                {% for game in current_user.games %}
+                    <tr>
+                        <td>
+                            {{ game.get_date() }}
+                        </td>
+                        <td >
+                            {{ game.range_from }}
+                        </td>
+                        <td >
+                            {{ game.range_to }}
+                        </td>
+                        <td >
+                            {{ game.amount }}
+                        </td>
+                        <td >
+                            {{ game.right_answers }}
+                        </td>
+                        <td >
+                            {{ game.assertiveness }}%
+                        </td>
+                    </tr>
+                {% endfor%}
+            </tbody>
+        </table> 
+ 
+    </div>
+ 
 
     
 {% endblock %}

@@ -80,6 +80,7 @@ class User(db.Model, UserMixin):
         return self.last_played.strftime('%a %Y-%m-%d')
 
 
+
 class Game(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -98,3 +99,8 @@ class Game(db.Model, UserMixin):
     def add_new(new_game):
         db.session.add(new_game)
         db.session.commit()
+
+    # Function that returns the day and date of the last game, without hours.
+    def get_date(self):        
+        # self.last_played.date() returns only the date
+        return self.date.strftime('%Y-%m-%d')
