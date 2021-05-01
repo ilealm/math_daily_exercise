@@ -4,7 +4,16 @@
     Stats Page
 {% endblock %}
 
+
 {% block content %}
+
+    <!-- For table sorting, search and pagination -->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- end -->
 
     <!-- Stats message -->
     <div class="position-relative overflow-hidden fs-4 p-3 mt-2 text-center  text-success " >
@@ -41,7 +50,7 @@
 
     <!-- Tbl with the results -->
     <div class="container pt-5  pb-5">
-        <table  class="table table-striped  table-sm   text-center  " >
+        <table id="myTable"  class="table table-striped  table-sm   text-center  " >
             <thead class=" navy-blue ">
                 <tr>
                     <th scope="col">Date</th>
@@ -82,7 +91,11 @@
  
     </div>
  
-  
+    <script>
+        $(document).ready(function(){
+            $('#myTable').dataTable();
+        });
+    </script>
 
     
 {% endblock %}
