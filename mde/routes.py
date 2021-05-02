@@ -152,3 +152,4 @@ def page_not_found(error):
     # that page should be 404 which means not found. By default 200 is assumed which
     # translates to: all went well.
     return render_template('error.html', error=error), 404
+
