@@ -32,7 +32,11 @@ def play_page():
         # clean if I have a past game
         remove_game_in_session()
         save_game_in_session(form)
-        return redirect(url_for('game_page'))
+        # Depending on the game mode, is the page to be redirected
+        if session['game']['mode'] == 'Exercises':
+            return redirect(url_for('game_page'))
+        else:    
+            return redirect(url_for('game_by_time_page'))
 
     # Display errors using flashing
     if form.errors != {}:
@@ -43,6 +47,7 @@ def play_page():
     # if I got here, I need to clean the past game, if there is one
     remove_game_in_session()
     return render_template('play.html', form=form, range_table_values=range_table_values)
+
 
 
 @app.route('/game', methods=['GET', 'POST'])
