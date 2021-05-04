@@ -1,12 +1,13 @@
 from flask_login import login_user, logout_user, current_user
 from flask import session
 import random
+import time
 
 from mde.models import User, Game
 from mde import app, db
 
 
-range_table_values = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+range_table_values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 # Function that takes the new user information from a form and returns a User object.
 
@@ -182,3 +183,12 @@ def session_game_exits():
 
 def remove_game_in_session():
     session.pop('game', None)
+
+
+def game_by_time():
+    start_time = time.time()
+    print('game started at ', start_time)
+    time.sleep(3)
+    end_time = time.time()
+    print('game ended at ', end_time)
+    print('game time ', (end_time - start_time))

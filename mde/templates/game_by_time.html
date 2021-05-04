@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+ 
+{% block title %}
+    Timed Game Page
+{% endblock %}
+
+{% block content %}
+   
+
+    <div class="container ">       
+        <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light text-center " >
+            <h1>
+                <label type="text" style="color:red"> Math</label>  
+                <label type="text" style="color:green"> Daily</label>  
+                <label type="text" style="color:purple"> Exercises</label>  
+                <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
+            </h1>
+            <br>                         
+    </div>
+        <div class="container w-50 pt-3 px-4" s >
+
+          
+            <form id="myForm" method='POST' action='/game_by_time' class="form-register " >    
+               <p> kdsfkdshfkjhds </p>
+                
+                <div class="p-5 text-center">
+                    {{ form.submit(class="btn btn-lg btn-outline-danger ") }}
+                </div>
+            </form>   
+
+
+  
+        </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script>
+        // setInterval(function(){ alert("Hello"); }, 3000);
+        setTimeout(function(){ submit_form(); }, 2000);
+
+        function submit_form(){
+            console.log("in submit form")
+            $("#submit").click()
+        };
+    </script>
+
+{% endblock %}

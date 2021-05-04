@@ -5,15 +5,15 @@ from flask_login import login_required, current_user
 
 from mde import app  # , db
 from mde.models import User
-from mde.forms import RegisterForm, LoginForm, PlayForm, GameForm
+from mde.forms import RegisterForm, LoginForm, PlayForm, GameForm, GameByTimeForm
 from wtforms.validators import ValidationError
 
 # user management
-from helpers import get_user_to_create, add_user, log_in_user, log_out_user, get_user, is_user_password
+from mde.helpers import get_user_to_create, add_user, log_in_user, log_out_user, get_user, is_user_password
 # session management
-from helpers import save_game_in_session, remove_game_in_session, session_game_exits
+from mde.helpers import save_game_in_session, remove_game_in_session, session_game_exits
 # game management
-from helpers import range_table_values, process_game
+from mde.helpers import range_table_values, process_game, game_by_time
 
 
 @app.route('/')
@@ -73,6 +73,20 @@ def game_page():
                 f'There were errors while checking the game: {err_msg}', category='danger')
 
     return render_template('game.html', form=form)
+
+
+@app.route('/game_by_time', methods=['GET', 'POST'])
+@login_required
+def game_by_time_page():
+    # print('in page')
+    # form = GameForm(operations=user_operations)
+    form = GameByTimeForm()
+
+    if request.method == 'POST':
+        # print('page submitted')
+        return redirect(url_for('stats_page'))
+    # game_by_time()
+    return render_template('game_by_time.html', form=form)
 
 
 @app.route('/results', methods=['GET', 'POST'])
@@ -152,4 +166,6 @@ def page_not_found(error):
     # that page should be 404 which means not found. By default 200 is assumed which
     # translates to: all went well.
     return render_template('error.html', error=error), 404
+
+
 

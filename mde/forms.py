@@ -6,7 +6,7 @@ from mde.models import User
 
 
 TABLES_RANGE = [(2, '2'), (3, '3'), (4, '4'), (5, '5'),
-                (6, '6'), (7, '7'), (8, '8'), (9, '9'), (10, '10')]
+                (6, '6'), (7, '7'), (8, '8'), (9, '9'), (10, '10'), (11, '11'), (12, '12')]
 PLAY_MODES = ['Exercises', 'Minutes']
 
 # THIS CODE EXECUTES TOP TO BOTTOM, so called functions need to be before
@@ -83,5 +83,10 @@ class OperationForm(Form):
 # is unnecessary for the forms that will be nested in the main form.
 # https://prettyprinted.com/tutorials/how-to-use-fieldlist-in-flask-wtf
 class GameForm(FlaskForm):
+    operations = FieldList(FormField(OperationForm), min_entries=1)
+    submit = SubmitField(label='Check')
+
+
+class GameByTimeForm(FlaskForm):
     operations = FieldList(FormField(OperationForm), min_entries=1)
     submit = SubmitField(label='Check')
