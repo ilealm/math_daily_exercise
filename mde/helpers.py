@@ -97,15 +97,31 @@ def get_multiplication_obj(range_from, range_to, id=1):
 
 # Function that receives a game configuration and set the session['game'] with it
 def save_game_in_session(play_form):
-    game = {
+    game_mode = play_form.mode.data
+    base_game = {
         'range_from': play_form.range_from.data,
         'range_to': play_form.range_to.data,
-        'amount': play_form.amount.data,
-        'mode': play_form.mode.data,
-        'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, play_form.amount.data),
+        'mode': game_mode,
         'right_answers': None,
         'assertiveness': None
     }
+
+    #  I can create a base game, and use spread operator to unify the objects and create the game object
+    if game_mode == "Exercises":
+        config_game = {
+            'amount': play_form.amount.data,
+            'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, play_form.amount.data)
+        }
+    
+    if game_mode == "Minutes":
+        config_game = {
+            'amount': None,
+            'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, int(play_form.range_exersices.data))
+        }
+
+    game = { **base_game, **config_game }
+
+
     session['game'] = game
     session.permanent = False
 

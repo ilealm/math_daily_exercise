@@ -104,7 +104,6 @@ def game_by_time_page():
 def results_page():
     # session['game'] is set on play/POST. A game must be configure to enter this route
     if not 'game' in session:
-        # if not session_game_exits:
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
