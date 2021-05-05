@@ -30,51 +30,57 @@
     <div class="container w-50 pt-3 px-4" >            
         <div class="container " >          
             {% for op in session['game']['exercises']  %}     
-                <!-- <div class="row p-2 border " > -->
-                {%  if op['user_answer'] == op['result'] %}     
-                    <div class="row p-2 border right-bg " >
-                        <div class="col-3   d-flex  justify-content-end"  >            
-                            <h5>
-                                <!-- <i class="bi bi-check2-circle text-success "></i>      -->
-                                <i class="bi bi-emoji-laughing text-success "></i>
-                            </h5>            
+                <!-- Just display the opertions user did answered -->
+                {% if not op['user_answer'] == None %}    
+                    {%  if op['user_answer'] == op['result'] %}     
+                        <div class="row p-2 border right-bg " >
+                            <div class="col-3   d-flex  justify-content-end"  >            
+                                <h5>
+                                    <!-- <i class="bi bi-check2-circle text-success "></i>      -->
+                                    <i class="bi bi-emoji-laughing text-success "></i>
+                                </h5>            
+                            </div>
+                            <div class="col  ">
+                                <span class="align-middle">
+                                    <label class="text fs-5" style="color:#219ebc"> {{ op.factor_a }}   </label>                                  
+                                    <i class="bi bi-asterisk symbol "></i>
+                                    <label class="text fs-5" style="color:#219ebc"> {{ op.factor_b }}   </label>  
+                                    <i class="bi bi-chevron-double-right symbol"></i>                                    
+                                    <label class="text fs-5" style="color:#ff6b6b"> {{ op.user_answer }}  </label>  
+                                        
+                                </span>                           
+                            </div>
+                    {% else %}
+                        <div class="row p-2 border wrong-bg" >
+                            <div class="col-3   d-flex  justify-content-end "  >         
+                                <h5>
+                                    <!-- <i class="bi bi-exclamation-circle text-danger"></i>             -->
+                                    <i class="bi bi-emoji-smile-upside-down  text-danger"></i>
+                                </h5>                       
+                            </div>
+                            <div class="col  ">
+                                <span class="align-middle">
+                                    <label class="text fs-5" style="color:#219ebc"> {{ op.factor_a }}   </label>  
+                                    <i class="bi bi-asterisk symbol "></i>
+                                    <label class="text fs-5" style="color:#219ebc"> {{ op.factor_b }}   </label>  
+                                    
+                                    <i class="bi bi-chevron-double-right symbol"></i>
+                                    {{ op.user_answer }}     
+                                    <label class="text fs-5 fst-italic" style="color:#ea7317">
+                                        &nbsp; ... answer is 
+                                        <i class="bi bi-arrow-right-circle-fill symbol text-danger"></i>
+                                    </label>                                
+                                    <label class="text fs-5 fw-bold" style="color:#20bf55"> {{ op.result }}   </label>                                  
+                                </span>                           
                         </div>
-                        <div class="col  ">
-                            <span class="align-middle">
-                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_a }}   </label>                                  
-                                <i class="bi bi-asterisk symbol "></i>
-                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_b }}   </label>  
-                                <i class="bi bi-chevron-double-right symbol"></i>                                    
-                                <label class="text fs-5" style="color:#ff6b6b"> {{ op.user_answer }}  </label>  
-                                      
-                            </span>                           
-                        </div>
-                {% else %}
-                    <div class="row p-2 border wrong-bg" >
-                        <div class="col-3   d-flex  justify-content-end "  >         
-                            <h5>
-                                <!-- <i class="bi bi-exclamation-circle text-danger"></i>             -->
-                                <i class="bi bi-emoji-smile-upside-down  text-danger"></i>
-                            </h5>                       
-                        </div>
-                        <div class="col  ">
-                            <span class="align-middle">
-                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_a }}   </label>  
-                                <i class="bi bi-asterisk symbol "></i>
-                                <label class="text fs-5" style="color:#219ebc"> {{ op.factor_b }}   </label>  
-                                
-                                <i class="bi bi-chevron-double-right symbol"></i>
-                                {{ op.user_answer }}     
-                                <label class="text fs-5 fst-italic" style="color:#ea7317">
-                                    &nbsp; ... answer is 
-                                    <i class="bi bi-arrow-right-circle-fill symbol text-danger"></i>
-                                </label>                                
-                                <label class="text fs-5 fw-bold" style="color:#20bf55"> {{ op.result }}   </label>                                  
-                            </span>                           
-                    </div>
+                    {% endif %}
+                     
                 {% endif %}
+                
+                                
+                
                     
-                    </div>
+            </div>
             {% endfor %} 
             <div class="p-5  d-flex justify-content-evenly " >
                 <a class="nav-link btn btn-lg btn-outline-info " " href="{{ url_for('stats_page') }}">View my Stats  </a>

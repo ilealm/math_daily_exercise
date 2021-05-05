@@ -81,24 +81,6 @@ def game_page():
     return render_template('game.html', form=form)
 
 
-# Route that handles the user's game in "Minutes" mode , meaning the user wants to try a n amount of exersices in a fixed amount of time.
-@app.route('/game_by_time', methods=['GET', 'POST'])
-@login_required
-def game_by_time_page():
-    if not 'game' in session:
-        flash(f'Please configure your game to start playing. ', category='danger')
-        return redirect(url_for('play_page'))
-
-    user_operations = session['game']['exercises'] 
-    # form = GameForm(operations=user_operations)
-    form = GameByTimeForm()
-
-    if request.method == 'POST':
-        return redirect(url_for('stats_page'))
-    # game_by_time()
-    return render_template('game_by_time.html', form=form)
-
-
 @app.route('/results', methods=['GET', 'POST'])
 @login_required
 def results_page():
