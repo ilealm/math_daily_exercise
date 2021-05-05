@@ -18,6 +18,9 @@
         <div class="container w-50 pt-3 px-4" s >
             <form method='POST' action='/game' class="form-register " >    
                 {{ form.hidden_tag() }}
+                <div class="alert alert-info" role="alert" id="times_up" hidden>
+                   Time's up! - This exercise will auto-sumbit.
+                </div>
 
                 <div class="container">
                     {% for op in form.operations  %}                
@@ -55,18 +58,27 @@
         // Set the focus to the 1st exersice
         document.getElementById("operations-0-user_answer").focus();
 
+
         // if the fame is in "Minutes" mode, then I add a timer
         if (`{{session['game']['mode']}}` == "Minutes") {
             let gameTime = `{{session['game']['time_played']}}`;
             // 60 is the seconds in a minute, and 1,000 is one second in the system
             let gameTimeInSeconds = (gameTime * 60) * 1000;
 
-            setTimeout(function(){ submit_form(); }, gameTimeInSeconds);  
+            setTimeout(function(){ inform_times_up(); }, gameTimeInSeconds);  
+        }
+        
+        
+        // function that displays a message that the time's up, and then call submit_
+        function inform_times_up(){
+
+            document.getElementById("times_up").hidden = false
+            document.getElementById("times_up").focus()
+            window.scrollTo(0,0)
+            setTimeout(function(){ submit_form(); }, 3000);  
         }
 
-
         function submit_form(){
-            console.log("in submit form")
             $("#submit").click()
         };
         
