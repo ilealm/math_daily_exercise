@@ -8,6 +8,7 @@ from mde.models import User
 TABLES_RANGE = [(2, '2'), (3, '3'), (4, '4'), (5, '5'),
                 (6, '6'), (7, '7'), (8, '8'), (9, '9'), (10, '10'), (11, '11'), (12, '12')]
 PLAY_MODES = ['Exercises', 'Minutes']
+NUM_EXERCISES_RANGE = [(25,'25 Exercises'), (50,'50 Exercises'), (100,'100 Exercises'), (150,'150 Exercises'), (200,'200 Exercises'), (250,'250 Exercises')  ]
 
 # THIS CODE EXECUTES TOP TO BOTTOM, so called functions need to be before
 
@@ -61,6 +62,7 @@ class PlayForm(FlaskForm):
     mode = RadioField(u'Mode', choices=PLAY_MODES, default=1, validators=[
         # in order to display this message, this MUST BE InputRequired, NOT DataRequired.
         InputRequired(message="Please select a practice mode.")])
+    range_exersices = SelectField(u'Trying', choices=NUM_EXERCISES_RANGE, default=25)
     submit = SubmitField(label='Play!')
 
     def validate_range_from(form, range_from_to_check):

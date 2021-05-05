@@ -67,10 +67,22 @@
                                                     <td>{{ subfield.label }}</td>
                                                     <br>
                                                 </tr>
-                                                {% endfor %}
+                                                {% endfor %}                                                
+                                                <!-- number of excersices when the amount of time is selected -->
+                                                <div class="container ">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 d-flex justify-content-end border">
+                                                            <label> Trying </label> 
+                                                        </div>
+                                                        <div class="col-sm-9 border ">
+                                                            {{ form.range_exersices(class="form-select") }}        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end number of excersices when the amount of time is selected -->
+
                                         </div>
                                     </div>
-
                                     </div>
                             </div>
                             </div>

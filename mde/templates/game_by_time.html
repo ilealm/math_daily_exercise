@@ -21,8 +21,6 @@
 
           
             <form id="myForm" method='POST' action='/game_by_time' class="form-register " >    
-               <p> kdsfkdshfkjhds </p>
-                
                 <div class="p-5 text-center">
                     {{ form.submit(class="btn btn-lg btn-outline-danger ") }}
                 </div>
@@ -40,8 +38,7 @@
         let gameTime = `{{session['game']['amount']}}`;
         let gameTimeInSeconds = (gameTime * 60) * 1000;
 
-        // setTimeout(function(){ submit_form(); }, 2000);
-        setTimeout(function(){ submit_form(); }, gameTimeInSeconds);  // 60 is the seconds in a minute, and 1,000 is one second in the system
+        // setTimeout(function(){ submit_form(); }, gameTimeInSeconds);  // 60 is the seconds in a minute, and 1,000 is one second in the system
 
         function submit_form(){
             console.log("in submit form")

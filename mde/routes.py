@@ -49,7 +49,7 @@ def play_page():
     return render_template('play.html', form=form, range_table_values=range_table_values)
 
 
-
+# Route that handles the user's game in mode "Exersices", meaning the user want to try a fixed amount of excersices.
 @app.route('/game', methods=['GET', 'POST'])
 @login_required
 def game_page():
@@ -57,6 +57,7 @@ def game_page():
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
+    # get the number of exersices to perform
     user_operations = session['game']['exercises']
     # because I know how many operations I need to display, I need to pass the operations as argument . form = GameForm() will only put 1 empty row
     form = GameForm(operations=user_operations)
@@ -80,10 +81,14 @@ def game_page():
     return render_template('game.html', form=form)
 
 
+# Route that handles the user's game in mode "Minutes", meaning the user wants to try a n amount of exersices in a fixed amount of time.
 @app.route('/game_by_time', methods=['GET', 'POST'])
 @login_required
 def game_by_time_page():
     # print('in page')
+    # TODO: defined where I'm getting the value of user_operations
+    user_operations = session['game']['exercises'] 
+    print('user_operations', user_operations)
     # form = GameForm(operations=user_operations)
     form = GameByTimeForm()
 
