@@ -36,7 +36,6 @@
                         <div class="row p-2 border right-bg " >
                             <div class="col-3   d-flex  justify-content-end"  >            
                                 <h5>
-                                    <!-- <i class="bi bi-check2-circle text-success "></i>      -->
                                     <i class="bi bi-emoji-laughing text-success "></i>
                                 </h5>            
                             </div>
@@ -50,11 +49,11 @@
                                         
                                 </span>                           
                             </div>
+                        </div>  
                     {% else %}
                         <div class="row p-2 border wrong-bg" >
                             <div class="col-3   d-flex  justify-content-end "  >         
                                 <h5>
-                                    <!-- <i class="bi bi-exclamation-circle text-danger"></i>             -->
                                     <i class="bi bi-emoji-smile-upside-down  text-danger"></i>
                                 </h5>                       
                             </div>
@@ -71,21 +70,17 @@
                                         <i class="bi bi-arrow-right-circle-fill symbol text-danger"></i>
                                     </label>                                
                                     <label class="text fs-5 fw-bold" style="color:#20bf55"> {{ op.result }}   </label>                                  
-                                </span>                           
+                                </span>       
+                            </div>                    
                         </div>
                     {% endif %}
-                    </div>                     
-                {% endif %}
-                
-                                
-                
-                    
-            <!-- </div> -->
+                {% endif %}                    
             {% endfor %} 
-            <div class="p-5  d-flex justify-content-evenly " >
-                <a class="nav-link btn btn-lg btn-outline-info " " href="{{ url_for('stats_page') }}">View my Stats  </a>
-                <a class="nav-link btn btn-lg btn-outline-danger " " href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
-            </div>
+        </div>
+        <div class="p-5  d-flex justify-content-evenly " >
+            <a class="nav-link btn btn-lg btn-outline-info " " href="{{ url_for('stats_page') }}">View my Stats  </a>
+            <a class="nav-link btn btn-lg btn-outline-danger " " href="{{ url_for('play_page') }}">Play Again <em>!</em> </a>
+        </div>
     </div>
 
 {% endblock %}
