@@ -59,6 +59,7 @@
             <thead class=" navy-blue ">
                 <tr>
                     <th scope="col">Date</th>
+                    <th scope="col">Game Mode</th>
                     <th scope="col">Table From</th>
                     <th scope="col">Table To</th>
                     <th scope="col">Num. Exercises</th>
@@ -72,6 +73,9 @@
                         <td>
                             {{ game.get_date() }}
                         </td>
+                        <td>
+                          {{ game.mode }}
+                      </td>
                         <td >
                             {{ game.range_from }}
                         </td>

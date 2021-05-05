@@ -6,6 +6,8 @@
 
 {% block content %}
 
+
+
     <div class="container  pt-3 px-4" style="border-style: solid; border-color: white;" >
         <form method='POST' class="form-register " >    
             <!-- the next line is to secure the page from CSTF attacks -->
@@ -67,10 +69,22 @@
                                                     <td>{{ subfield.label }}</td>
                                                     <br>
                                                 </tr>
-                                                {% endfor %}
+                                                {% endfor %}                                                
+                                                <!-- number of exercises when the amount of time is selected -->
+                                                <div class="container ">
+                                                    <div class="row">
+                                                        <div class="col-sm-3  text-end" style="color:#219ebc; " >
+                                                            <label class=" pt-2"> Trying </label> 
+                                                        </div>
+                                                        <div class="col-sm-9  ">
+                                                            {{ form.range_exersices(class="form-select") }}        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end number of exercises when the amount of time is selected -->
+
                                         </div>
                                     </div>
-
                                     </div>
                             </div>
                             </div>

@@ -5,15 +5,15 @@ from flask_login import login_required, current_user
 
 from mde import app  # , db
 from mde.models import User
-from mde.forms import RegisterForm, LoginForm, PlayForm, GameForm
+from mde.forms import RegisterForm, LoginForm, PlayForm, GameForm, GameByTimeForm
 from wtforms.validators import ValidationError
 
 # user management
-from helpers import get_user_to_create, add_user, log_in_user, log_out_user, get_user, is_user_password
+from mde.helpers import get_user_to_create, add_user, log_in_user, log_out_user, get_user, is_user_password
 # session management
-from helpers import save_game_in_session, remove_game_in_session, session_game_exits
+from mde.helpers import save_game_in_session, remove_game_in_session, session_game_exits
 # game management
-from helpers import range_table_values, process_game
+from mde.helpers import range_table_values, process_game, at_least_one_answer
 
 
 @app.route('/')
@@ -45,6 +45,7 @@ def play_page():
     return render_template('play.html', form=form, range_table_values=range_table_values)
 
 
+# Route that handles the user's game in  "Exersices" mode, meaning the user want to try a fixed amount of excersices.
 @app.route('/game', methods=['GET', 'POST'])
 @login_required
 def game_page():
@@ -52,6 +53,7 @@ def game_page():
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
+    # get the number of exersices to perform. If is in "Exercise" mode will the the amount, otherwhise will be the value of the trying combo
     user_operations = session['game']['exercises']
     # because I know how many operations I need to display, I need to pass the operations as argument . form = GameForm() will only put 1 empty row
     form = GameForm(operations=user_operations)
@@ -62,8 +64,12 @@ def game_page():
         for field in form.operations:
             user_answers.append(field.data)
 
-        process_game(user_answers)
+        if not at_least_one_answer(user_answers):
+            flash(f'You didn\'t answer any exercise.', category='danger')
+            return redirect(url_for('play_page'))
 
+
+        process_game(user_answers)
         return redirect(url_for('results_page'))
 
     # Display errors using flashing
@@ -80,7 +86,6 @@ def game_page():
 def results_page():
     # session['game'] is set on play/POST. A game must be configure to enter this route
     if not 'game' in session:
-        # if not session_game_exits:
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
@@ -152,4 +157,6 @@ def page_not_found(error):
     # that page should be 404 which means not found. By default 200 is assumed which
     # translates to: all went well.
     return render_template('error.html', error=error), 404
+
+
 

@@ -1,12 +1,14 @@
+from flask import flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user
 from flask import session
 import random
+import time
 
 from mde.models import User, Game
 from mde import app, db
 
 
-range_table_values = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+range_table_values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 # Function that takes the new user information from a form and returns a User object.
 
@@ -96,32 +98,80 @@ def get_multiplication_obj(range_from, range_to, id=1):
 
 # Function that receives a game configuration and set the session['game'] with it
 def save_game_in_session(play_form):
-    game = {
+    game_mode = play_form.mode.data
+    base_game = {
         'range_from': play_form.range_from.data,
         'range_to': play_form.range_to.data,
-        'amount': play_form.amount.data,
-        'mode': play_form.mode.data,
-        'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, play_form.amount.data),
+        'mode': game_mode,
+        'amount': play_form.amount.data, 
         'right_answers': None,
         'assertiveness': None
     }
+
+    #  I can create a base game, and use spread operator to unify the objects and create the game object
+    if game_mode == "Exercises":
+        config_game = {
+            'time_played' : None,
+            'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, play_form.amount.data)
+        }
+    
+    if game_mode == "Minutes":
+        config_game = {
+            # TODO update this amount on save game to DB with the right amount of solved questions
+            'time_played' : int(play_form.amount.data),
+            'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, int(play_form.range_exersices.data))
+        }
+
+    game = { **base_game, **config_game }
+
+
     session['game'] = game
     session.permanent = False
 
 
+# Boolean function that receives the user's answers and validate if at least one has value
+def at_least_one_answer(user_answers):
+    for op in user_answers:
+        if not op['user_answer'] == None:
+            return True 
+    
+    return False
+
 # Function that receives the user's answers, and with it update the session game and register the game into DB.
 def process_game(user_answers):
-    if not session_game_exits:
-        flash(f'Please configure your game to start playing. ', category='danger')
-        return redirect(url_for('play_page'))
-
     update_game_in_session_answers(user_answers)
     save_game_in_db()
     update_user_stats(session['game']['right_answers'])
-    # TODO here
+ 
 
-    # reload the user in session, BC the info is updated. check if I need to do this, or the obj is already updated
 
+# Function that receives an array with a copy of session[game][operations] but with user answers.
+# The user answers will be added to the sesssion, and [game][right_answers] will be updated, in a string format.
+# Also, the amount of right answers will be counted and updated to [session][game][right_answers]
+def update_game_in_session_answers(user_answers):
+    session['game']['exercises'] = user_answers
+
+    right_answers = 0
+    answered_exercises = 0  # to keep a control of the real amount of answered questions
+    for op in session['game']['exercises']:
+        if not op['user_answer'] == None:
+            answered_exercises += 1 
+            op['user_answer'] = str(op['user_answer'])
+            if op['user_answer'] == op['result']:
+                right_answers += 1
+
+    
+    # I'm only updatig session[game] if the user has answered something
+    if answered_exercises > 0:
+        session['game']['amount'] = answered_exercises
+        session['game']['right_answers'] = right_answers
+        session['game']['assertiveness'] = round( 
+            ((right_answers / answered_exercises) * 100), 2)    
+
+        # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
+        # I need to tell it that has been updated
+        session.modified = True
+    
 
 def save_game_in_db():
     try:
@@ -152,26 +202,6 @@ def update_user_stats(num_right_answers):
             'An error occurred while updating the usert game stats into the database: ', error)
 
 
-# Function that receives an array with a copy of session[game][operations] but with user answers.
-# The user answers will be added to the sesssion, and [game][right_answers] will be updated, in a string format.
-# Also, the amount of right answers will be counted and updated to [session][game][right_answers]
-def update_game_in_session_answers(user_answers):
-    session['game']['exercises'] = user_answers
-
-    right_answers = 0
-    for op in session['game']['exercises']:
-        op['user_answer'] = str(op['user_answer'])
-        if op['user_answer'] == op['result']:
-            right_answers += 1
-
-    session['game']['right_answers'] = right_answers
-    session['game']['assertiveness'] = round(
-        ((right_answers / session['game']['amount']) * 100), 2)
-
-    # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
-    # I need to tell it that has been updated
-    session.modified = True
-
 
 # Function that returns true/false if the object session['game'] exists
 def session_game_exits():
@@ -182,3 +212,12 @@ def session_game_exits():
 
 def remove_game_in_session():
     session.pop('game', None)
+
+
+# def game_by_time():
+#     start_time = time.time()
+#     print('game started at ', start_time)
+#     time.sleep(3)
+#     end_time = time.time()
+#     print('game ended at ', end_time)
+#     print('game time ', (end_time - start_time))
