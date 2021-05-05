@@ -38,10 +38,10 @@
     <script>
 
         let gameTime = `{{session['game']['amount']}}`;
-        console.log('The game time is ', gameTime);
+        let gameTimeInSeconds = (gameTime * 60) * 1000;
 
         // setTimeout(function(){ submit_form(); }, 2000);
-        setTimeout(function(){ submit_form(); }, ((gameTime * 60) * 1000));  // 60 is the seconds in a minute, and 1,000 is one second in the system
+        setTimeout(function(){ submit_form(); }, gameTimeInSeconds);  // 60 is the seconds in a minute, and 1,000 is one second in the system
 
         function submit_form(){
             console.log("in submit form")
