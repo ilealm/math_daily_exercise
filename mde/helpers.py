@@ -1,3 +1,4 @@
+from flask import flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user
 from flask import session
 import random
@@ -102,6 +103,7 @@ def save_game_in_session(play_form):
         'range_from': play_form.range_from.data,
         'range_to': play_form.range_to.data,
         'mode': game_mode,
+        'amount': play_form.amount.data, 
         'right_answers': None,
         'assertiveness': None
     }
@@ -109,13 +111,14 @@ def save_game_in_session(play_form):
     #  I can create a base game, and use spread operator to unify the objects and create the game object
     if game_mode == "Exercises":
         config_game = {
-            'amount': play_form.amount.data,
+            'time_played' : None,
             'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, play_form.amount.data)
         }
     
     if game_mode == "Minutes":
         config_game = {
-            'amount': None,
+            # TODO update this amount on save game to DB with the right amount of solved questions
+            'time_played' : int(play_form.amount.data),
             'exercises': get_exercises(play_form.range_from.data, play_form.range_to.data, int(play_form.range_exersices.data))
         }
 
@@ -126,6 +129,14 @@ def save_game_in_session(play_form):
     session.permanent = False
 
 
+# Boolean function that receives the user's answers and validate if at least one has value
+def at_least_one_answer(user_answers):
+    for op in user_answers:
+        if not op['user_answer'] == None:
+            return True 
+    
+    return False
+
 # Function that receives the user's answers, and with it update the session game and register the game into DB.
 def process_game(user_answers):
     if not session_game_exits:
@@ -135,9 +146,10 @@ def process_game(user_answers):
     update_game_in_session_answers(user_answers)
     save_game_in_db()
     update_user_stats(session['game']['right_answers'])
-    # TODO here
+ 
 
-    # reload the user in session, BC the info is updated. check if I need to do this, or the obj is already updated
+def validate_game_for():
+    pass
 
 
 def save_game_in_db():
@@ -176,18 +188,32 @@ def update_game_in_session_answers(user_answers):
     session['game']['exercises'] = user_answers
 
     right_answers = 0
+    answered_exercises = 0  # to keep a control of the real amount of answered questions
     for op in session['game']['exercises']:
-        op['user_answer'] = str(op['user_answer'])
-        if op['user_answer'] == op['result']:
-            right_answers += 1
+        if not op['user_answer'] == None:
+            answered_exercises += 1 
+            op['user_answer'] = str(op['user_answer'])
+            if op['user_answer'] == op['result']:
+                right_answers += 1
 
-    session['game']['right_answers'] = right_answers
-    session['game']['assertiveness'] = round(
-        ((right_answers / session['game']['amount']) * 100), 2)
+    # TODO if the game mode is minutes, update the time_played of answered questions. if mode is excersices, up time_played
+    
+    # I'm only updatig session[game] if the user has answered something
+    if answered_exercises > 0:
+        print('\n\n updating sesion game')
+        session['game']['amount'] = answered_exercises
+        session['game']['right_answers'] = right_answers
+        session['game']['assertiveness'] = round( 
+            ((right_answers / answered_exercises) * 100), 2)    
+        # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
+        # I need to tell it that has been updated
+        session.modified = True
+    else:
+        print('\n\n the game WAS NOT UPDATED ZERO answers')
 
-    # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
-    # I need to tell it that has been updated
-    session.modified = True
+        
+
+
 
 
 # Function that returns true/false if the object session['game'] exists
@@ -201,10 +227,10 @@ def remove_game_in_session():
     session.pop('game', None)
 
 
-def game_by_time():
-    start_time = time.time()
-    print('game started at ', start_time)
-    time.sleep(3)
-    end_time = time.time()
-    print('game ended at ', end_time)
-    print('game time ', (end_time - start_time))
+# def game_by_time():
+#     start_time = time.time()
+#     print('game started at ', start_time)
+#     time.sleep(3)
+#     end_time = time.time()
+#     print('game ended at ', end_time)
+#     print('game time ', (end_time - start_time))

@@ -34,14 +34,14 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script>
-
+        console.log('in game_by_time')
         let gameTime = `{{session['game']['amount']}}`;
         let gameTimeInSeconds = (gameTime * 60) * 1000;
 
-        // setTimeout(function(){ submit_form(); }, gameTimeInSeconds);  // 60 is the seconds in a minute, and 1,000 is one second in the system
+        setTimeout(function(){ submit_form(); }, gameTimeInSeconds);  // 60 is the seconds in a minute, and 1,000 is one second in the system
 
         function submit_form(){
-            console.log("in submit form")
+            console.log("in submit form in game_by_time")
             $("#submit").click()
         };
     </script>

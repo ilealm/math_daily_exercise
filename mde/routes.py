@@ -13,7 +13,7 @@ from mde.helpers import get_user_to_create, add_user, log_in_user, log_out_user,
 # session management
 from mde.helpers import save_game_in_session, remove_game_in_session, session_game_exits
 # game management
-from mde.helpers import range_table_values, process_game, game_by_time
+from mde.helpers import range_table_values, process_game, at_least_one_answer
 
 
 @app.route('/')
@@ -32,11 +32,7 @@ def play_page():
         # clean if I have a past game
         remove_game_in_session()
         save_game_in_session(form)
-        # Depending on the game mode, is the page to be redirected
-        if session['game']['mode'] == 'Exercises':
-            return redirect(url_for('game_page'))
-        else:    
-            return redirect(url_for('game_by_time_page'))
+        return redirect(url_for('game_page'))
 
     # Display errors using flashing
     if form.errors != {}:
@@ -49,7 +45,7 @@ def play_page():
     return render_template('play.html', form=form, range_table_values=range_table_values)
 
 
-# Route that handles the user's game in mode "Exersices", meaning the user want to try a fixed amount of excersices.
+# Route that handles the user's game in  "Exersices" mode, meaning the user want to try a fixed amount of excersices.
 @app.route('/game', methods=['GET', 'POST'])
 @login_required
 def game_page():
@@ -57,7 +53,7 @@ def game_page():
         flash(f'Please configure your game to start playing. ', category='danger')
         return redirect(url_for('play_page'))
 
-    # get the number of exersices to perform
+    # get the number of exersices to perform. If is in "Exercise" mode will the the amount, otherwhise will be the value of the trying combo
     user_operations = session['game']['exercises']
     # because I know how many operations I need to display, I need to pass the operations as argument . form = GameForm() will only put 1 empty row
     form = GameForm(operations=user_operations)
@@ -68,8 +64,12 @@ def game_page():
         for field in form.operations:
             user_answers.append(field.data)
 
-        process_game(user_answers)
+        if not at_least_one_answer(user_answers):
+            flash(f'You didn\'t answer any exercise.', category='danger')
+            return redirect(url_for('play_page'))
 
+
+        process_game(user_answers)
         return redirect(url_for('results_page'))
 
     # Display errors using flashing
@@ -81,19 +81,19 @@ def game_page():
     return render_template('game.html', form=form)
 
 
-# Route that handles the user's game in mode "Minutes", meaning the user wants to try a n amount of exersices in a fixed amount of time.
+# Route that handles the user's game in "Minutes" mode , meaning the user wants to try a n amount of exersices in a fixed amount of time.
 @app.route('/game_by_time', methods=['GET', 'POST'])
 @login_required
 def game_by_time_page():
-    # print('in page')
-    # TODO: defined where I'm getting the value of user_operations
+    if not 'game' in session:
+        flash(f'Please configure your game to start playing. ', category='danger')
+        return redirect(url_for('play_page'))
+
     user_operations = session['game']['exercises'] 
-    print('user_operations', user_operations)
     # form = GameForm(operations=user_operations)
     form = GameByTimeForm()
 
     if request.method == 'POST':
-        # print('page submitted')
         return redirect(url_for('stats_page'))
     # game_by_time()
     return render_template('game_by_time.html', form=form)

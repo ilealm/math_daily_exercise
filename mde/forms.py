@@ -76,8 +76,9 @@ class OperationForm(Form):
     factor_a = StringField()
     factor_b = StringField(label='factor_b')
     result = HiddenField(label='factor_b')
-    user_answer = IntegerField(label='result', validators=[
-        DataRequired(message='Please enter an integer result.'), ])
+    user_answer = IntegerField(label='result',  validators=[ Optional()])
+    # user_answer = IntegerField(label='result', validators=[
+    #     DataRequired(message='Please enter an integer result.'), ])
 
 
 # Note: You want your main form to be a FlaskForm while the form you will use for the FieldList will be a

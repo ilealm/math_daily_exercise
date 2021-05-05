@@ -50,9 +50,26 @@
 
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script>
         // Set the focus to the 1st exersice
         document.getElementById("operations-0-user_answer").focus();
+
+        // if the fame is in "Minutes" mode, then I add a timer
+        if (`{{session['game']['mode']}}` == "Minutes") {
+            let gameTime = `{{session['game']['time_played']}}`;
+            // 60 is the seconds in a minute, and 1,000 is one second in the system
+            let gameTimeInSeconds = (gameTime * 60) * 1000;
+
+            setTimeout(function(){ submit_form(); }, gameTimeInSeconds);  
+        }
+
+
+        function submit_form(){
+            console.log("in submit form")
+            $("#submit").click()
+        };
+        
     </script>
 
 {% endblock %}
