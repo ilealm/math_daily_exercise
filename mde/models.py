@@ -90,6 +90,7 @@ class Game(db.Model, UserMixin):
     mode = db.Column(db.String(length=10), nullable=False)
     right_answers = db.Column(db.Integer, nullable=False)
     assertiveness = db.Column(db.Float, nullable=False)
+    timespan = db.Column(db.String(length=5), nullable=False)
     # relationship to the user. 'user.id' must be in lower case
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
