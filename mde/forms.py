@@ -58,7 +58,7 @@ class PlayForm(FlaskForm):
         DataRequired(message='The amount is required.'),
         NumberRange(
             min=1, max=30, message='The amount per game must be an integer between 1 and 30.')
-    ], default=3)
+    ], default=20)
     mode = RadioField(u'Mode', choices=PLAY_MODES, default=1, validators=[
         # in order to display this message, this MUST BE InputRequired, NOT DataRequired.
         InputRequired(message="Please select a practice mode.")])
