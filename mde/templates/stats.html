@@ -60,6 +60,7 @@
                 <tr>
                     <th scope="col">Date</th>
                     <th scope="col">Game Mode</th>
+                    <th scope="col">Game Time </th>
                     <th scope="col">Table From</th>
                     <th scope="col">Table To</th>
                     <th scope="col">Num. Exercises</th>
@@ -75,7 +76,10 @@
                         </td>
                         <td>
                           {{ game.mode }}
-                      </td>
+                        </td>
+                        <td>
+                          {{ game.timespan }}
+                        </td>
                         <td >
                             {{ game.range_from }}
                         </td>
