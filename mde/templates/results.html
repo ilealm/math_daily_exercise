@@ -9,7 +9,11 @@
     <!-- Result message -->
     <div class="position-relative overflow-hidden  p-3 mt-2 text-center  text-success " >
         <h5>
-            You did 
+            In
+            <label style="color:orangered">
+                {{ session['game']['timespan'] }} 
+            </label>   
+            you did 
             <label style="color:purple">
                 {{ session['game']['amount'] }} 
             </label>     

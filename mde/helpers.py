@@ -105,7 +105,9 @@ def save_game_in_session(play_form):
         'mode': game_mode,
         'amount': play_form.amount.data, 
         'right_answers': None,
-        'assertiveness': None
+        'assertiveness': None,
+        'start_timestap': time.time(),
+        'timespan': None,
     }
 
     #  I can create a base game, and use spread operator to unify the objects and create the game object
@@ -129,6 +131,7 @@ def save_game_in_session(play_form):
     session.permanent = False
 
 
+
 # Boolean function that receives the user's answers and validate if at least one has value
 def at_least_one_answer(user_answers):
     for op in user_answers:
@@ -138,7 +141,7 @@ def at_least_one_answer(user_answers):
     return False
 
 # Function that receives the user's answers, and with it update the session game and register the game into DB.
-def process_game(user_answers):
+def process_game(user_answers):    
     update_game_in_session_answers(user_answers)
     save_game_in_db()
     update_user_stats(session['game']['right_answers'])
@@ -148,11 +151,13 @@ def process_game(user_answers):
 # Function that receives an array with a copy of session[game][operations] but with user answers.
 # The user answers will be added to the sesssion, and [game][right_answers] will be updated, in a string format.
 # Also, the amount of right answers will be counted and updated to [session][game][right_answers]
-def update_game_in_session_answers(user_answers):
-    session['game']['exercises'] = user_answers
-
+def update_game_in_session_answers(user_answers):  
+    end_timestap =  time.time()
     right_answers = 0
     answered_exercises = 0  # to keep a control of the real amount of answered questions
+
+    session['game']['exercises'] = user_answers
+
     for op in session['game']['exercises']:
         if not op['user_answer'] == None:
             answered_exercises += 1 
@@ -167,11 +172,23 @@ def update_game_in_session_answers(user_answers):
         session['game']['right_answers'] = right_answers
         session['game']['assertiveness'] = round( 
             ((right_answers / answered_exercises) * 100), 2)    
-
+        session['game']['timespan'] = get_timestamp(session['game']['start_timestap'], end_timestap)
         # BC the session won't automatically detect changes to mutable data types (list, dictionary, set, etc.)
         # I need to tell it that has been updated
         session.modified = True
     
+
+def get_timestamp(start_timestap, end_timestap):
+    game_time = end_timestap - session['game']['start_timestap']
+    game_minutes = round(game_time // 60)
+    game_seconds = round(game_time % 60)
+
+    game_minutes =  ("00" + str(game_minutes))[-2:]
+    game_seconds =  ("0" + str(game_seconds))[-2:]
+
+    game_timespan = game_minutes + ":" + game_seconds
+    return game_timespan
+
 
 def save_game_in_db():
     try:
@@ -183,6 +200,7 @@ def save_game_in_db():
             mode=current_game['mode'],
             right_answers=current_game['right_answers'],
             assertiveness=current_game['assertiveness'],
+            timespan=current_game['timespan'],
             user_id=current_user.id
         )
         Game.add_new(game)   
@@ -214,10 +232,3 @@ def remove_game_in_session():
     session.pop('game', None)
 
 
-# def game_by_time():
-#     start_time = time.time()
-#     print('game started at ', start_time)
-#     time.sleep(3)
-#     end_time = time.time()
-#     print('game ended at ', end_time)
-#     print('game time ', (end_time - start_time))
