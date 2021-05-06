@@ -27,8 +27,7 @@ def add_user(new_user):
         User.add_new(new_user)
 
     except AssertionError as error:
-        app.logger.error(
-            'An error occurred while adding the user into the database: ', error)
+        app.logger.error( 'An error occurred while adding the user into the database: ', error)
 
 
 # Function that logs a user into the current session.

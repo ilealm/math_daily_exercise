@@ -23,35 +23,35 @@
                 </div>
             </div>
             <!-- cards selection (tables to practice and mode) -->
-            <div class="row gx-5">
+            <div class="row gx-5 " style="border-style: solid; border-color:white;" >
+                <!-- Step 1 : TABLES card component -->
                 <div class="col">
-                    <div class="p-3 border card-bg">                    
+                    <div class="p-3 border card-bg" style="height:100%">                    
                         <p class="font-weight-bold"> Step 1 </p>
-                        <!-- TABLES card component -->
-                        <div class="card">
+                        <div class="card pb-4" >
                             <div class="card-header instructions">
                                 Select tables to practice
                             </div>
-                            <div class="card-body">                              
-                                <div  class="row  ">
+                            <div class="card-body mb-1">                              
+                                <div  class="row  " >
                                     <div class="col-md-3 " >
                                         <label for="inputNumber" class="form-label">From</label>
                                         {{ form.range_from(class="form-select") }}    
                                     </div>
-                                    <div class="col-md-3  ">
+                                    <div class="col-md-3 ">
                                         <label for="inputTo" class="form-label">To</label>
                                         {{ form.range_to(class="form-select") }}    
                                     </div>
                                 </div>
-
                             </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Step 2: MODE card component -->
                 <div class="col">
                     <div class="p-3 border card-bg">
                         <p class="font-weight-bold"> Step 2 </p>
-                        <!-- MODE card component -->
                         <div class="card">
                             <div class="card-header instructions">
                                 Select mode to practice
@@ -90,6 +90,7 @@
                             </div>
                     </div>
                 </div>
+
             </div>
             <!-- play btn -->
             <div class="pt-5 text-center">
