@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+ 
+{% block title %}
+    About Page
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    
+    <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light text-center " >
+
+        
+        <!-- card component -->
+        <div class="card text-center">
+            <div class="card-header">
+                <h1 class=p-3>
+                    <label type="text" style="color:red"> Math</label>  
+                    <label type="text" style="color:green"> Daily</label>  
+                    <label type="text" style="color:purple"> Exercises</label>  
+                    <label type="text" style="color: yellow"> <strong> <i> ! </i> </strong> </label>   
+                </h1>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title p-2">The purpose of this website</h5>
+              <p class="card-text">
+                    As a dyslexic myself, I remember how I struggled to learn the product tables, so I wanted to create a way where kids (and adults) can safely practice them and get a progress record.            
+                    <br>
+                    <br>
+                    Also, I wanted to help parents to monitor their kid's daily math practice without overwhelming them and affecting the parent-child relationship.
+              </p>
+              
+            </div>
+            <div class="card-footer text-muted">
+                Website created By
+                <br><br>
+                Iris Leal
+                <br><br>
+                <i class="bi bi-linkedin s-4">     </i> 
+                <a href="https://www.linkedin.com/in/iris-leal/" class="link-info"> Find me at Linkedin </a>
+                <i class="bi bi-github"></i>
+                <a href="https://github.com/ilealm/" class="link-info"> Look at my GitHub </a>
+
+            </div>
+          </div>
+        <!-- end card component -->
+    </div>
+</div>
+
+
+{% endblock %}

@@ -98,6 +98,11 @@ def stats_page():
     return render_template('stats.html')
 
 
+@app.route('/about')
+def about_page():
+    return render_template('about.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
