@@ -1,3 +1,41 @@
+.card-bg {
+  color: #4e6bbf;
+  background-color: #f2edf7;
+}
+.instructions {
+  color:#2b9450 ;
+  background-color: azure;
+}
+.exclamation {
+  color: #f8961e;
+}
+.light-salmon{
+  color: #f35b04;
+}
+.right-bg{
+  background-color: #fdffb6;
+}
+.navy-blue{
+  color: #014f86;
+}
+.salmon{
+  color: #ff6b6b;
+}
+.subTitles {
+    color: #360670;
+  }
+.symbol{
+    color: #4e6bbf;
+    padding: .5em;
+  }
+.titles {
+  color: #063970;
+}
+.wrong-bg{
+  background-color: #e2f3ee; 
+}
+
+
 
 /*
  * Table styles
