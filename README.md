@@ -14,6 +14,9 @@ pip install flask_login
 Bootstrap icons
 npm i bootstrap-icons
 
+.env File
+pip install python-dotenv
+
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mde.db'
 

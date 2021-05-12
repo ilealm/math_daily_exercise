@@ -4,10 +4,9 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 app = Flask(__name__)
+# with this, I import the config file
+app.config.from_pyfile('config.py')
 
-# DB config
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mde.db'
-app.config['SECRET_KEY'] = 'b59f86b27719b42ba5a635e4' 
 db = SQLAlchemy(app)
 
 # Login/register mgnt
