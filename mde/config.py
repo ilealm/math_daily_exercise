@@ -9,13 +9,15 @@ load_dotenv(path.join(basedir, '.env'))
 
 
 # base config
-FLASK_ENV = 'development'
 SECRET_KEY = environ.get('SECRET_KEY')
 STATIC_FOLDER = 'static'
 TEMPLATES_FOLDER = 'templates'
+
+
+# Dev config
+FLASK_ENV = 'development'
+SQLALCHEMY_DATABASE_URI = environ.get('DEV_DATABASE_URI')
 DEBUG = True
 TESTING = True
-SQLALCHEMY_DATABASE_URI = 'sqlite:///mde.db'
-
 
 
