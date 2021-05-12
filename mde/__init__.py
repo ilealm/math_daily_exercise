@@ -5,10 +5,12 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
 app = Flask(__name__)
+
 # # with this, I import the config file
 app.config.from_pyfile('config.py')
-
-
+# For dev environment
+from mde.config import DevConfig
+app.config.from_object('mde.config.DevConfig')
 
 
 db = SQLAlchemy(app)
